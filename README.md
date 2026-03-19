@@ -1,2 +1,2 @@
 # Project-B-Airline
-project B casus airline team ducktape
+project B casus airline team duckteep
