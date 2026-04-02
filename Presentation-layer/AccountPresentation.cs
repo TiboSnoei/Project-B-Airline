@@ -6,6 +6,8 @@ public class AccountPresentation
 
     public void Run()
     {
+        // dit laat het menu zien met de arrow-keys, di hadden we als een vereiste in het interview genoemd. 
+        // deze kunnen jullie natuurlijk ook gebruiken
         bool running = true;
         string[] options = { "Login", "Register", "Exit" };
         int index = 0;
@@ -97,6 +99,7 @@ public class AccountPresentation
 
         if (success)
             Console.WriteLine("\nRegistration successful!");
+            // Ook hier zou een verwijzing naar de menu-clas moeten komen als die is gemaakt.
         else
             Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
 
@@ -119,7 +122,8 @@ public class AccountPresentation
         if (account != null)
         {
             Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
-            
+            // hier zou dan een verwijzing moeten komen naar de menu-class. Als die er is natuurlijk.
+
         }
         else
         {

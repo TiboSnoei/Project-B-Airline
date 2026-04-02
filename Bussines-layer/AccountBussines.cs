@@ -10,16 +10,16 @@ public class AccountLogic
         AccountModel? existingAccount = _accountAccess.GetByEmail(newAccount.Email);
         if (existingAccount != null)
         {
-            return false; // Account already exists
+            return false; // Voor net geval dat account al bestaat.
         }
 
-        // Validate name fields
+        // valideerdt name fields
         if (!CheckName(newAccount.FirstName) || !CheckName(newAccount.LastName))
         {
             return false;
         }
 
-        // Validate email and password
+        // valideert email and password
         if (!IsValidEmail(newAccount.Email) || !CheckValidPassword(newAccount.Password))
         {
             return false;
