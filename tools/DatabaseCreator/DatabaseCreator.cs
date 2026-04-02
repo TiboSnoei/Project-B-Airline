@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Data.Sqlite;
-internal static class Creatdatabase
+internal static class Createdatabase
 {
-    static int Main(string[] args)
+    static int createdatabase(string[] args)
     {
         var dbPath = Path.Combine("data", "airline.db");
         var schemaPath = Path.Combine("db", "schema.sqlite.sql");
