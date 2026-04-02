@@ -6,7 +6,6 @@ public class AccountLogic
 
     public bool CreateAccount(AccountModel newAccount)
     {
-        // Check if account already exists
         AccountModel? existingAccount = _accountAccess.GetByEmail(newAccount.Email);
         if (existingAccount != null)
         {
