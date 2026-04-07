@@ -1,32 +1,86 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using Microsoft.Data.Sqlite;
 
 public class AccountAccess
 {
-    private static List<AccountModel> _accounts = new List<AccountModel>();
-    private static int _nextId = 1;
+    private readonly string _connectionString;
+
+    public AccountAccess()
+    {
+        var dbPath = Path.Combine("data", "airline.db");
+        _connectionString = new SqliteConnectionStringBuilder
+        {
+            DataSource = dbPath,
+            Mode = SqliteOpenMode.ReadWrite
+        }.ToString();
+    }
 
     public void Write(AccountModel account)
     {
-        account.UserID = _nextId++;
-        account.CreatedAt = DateTime.Now;
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
 
-        _accounts.Add(account);
+        var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints)
+                    VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints)";
+
+        using var command = new SqliteCommand(sql, connection);
+        command.Parameters.AddWithValue("@UserType", "Customer");
+        command.Parameters.AddWithValue("@FirstName", account.FirstName);
+        command.Parameters.AddWithValue("@LastName", account.LastName);
+        command.Parameters.AddWithValue("@Password", account.Password);
+        command.Parameters.AddWithValue("@Email", account.Email);
+        command.Parameters.AddWithValue("@CreatedAt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        command.Parameters.AddWithValue("@TelNum", account.TelNum);
+        command.Parameters.AddWithValue("@LoyaltyPoints", 0);
+
+        command.ExecuteNonQuery();
     }
 
     public AccountModel GetByEmail(string email)
     {
-        return _accounts.FirstOrDefault(a => a.Email == email);
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        var sql = "SELECT UserID, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users WHERE Email = @Email";
+
+        using var command = new SqliteCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+
+        using var reader = command.ExecuteReader();
+        if (reader.Read())
+        {
+            return new AccountModel
+            {
+                UserID = reader.GetInt32(0),
+                FirstName = reader.GetString(1),
+                LastName = reader.GetString(2),
+                Password = reader.GetString(3),
+                Email = reader.GetString(4),
+                CreatedAt = DateTime.Parse(reader.GetString(5)),
+                TelNum = reader.GetString(6),
+                LoyaltyPoints = reader.GetInt32(7)
+            };
+        }
+
+        return null;
     }
 
     public int GetIdByEmail(string email)
     {
-        AccountModel account = _accounts.FirstOrDefault(a => a.Email == email);
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
 
-        if (account != null)
+        var sql = "SELECT UserID FROM Users WHERE Email = @Email";
+
+        using var command = new SqliteCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", email);
+
+        var result = command.ExecuteScalar();
+        if (result != null)
         {
-            return account.UserID;
+            return Convert.ToInt32(result);
         }
 
         return 0;
@@ -34,32 +88,66 @@ public class AccountAccess
 
     public List<AccountModel> GetAll()
     {
-        return _accounts;
+        var accounts = new List<AccountModel>();
+
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        var sql = "SELECT UserID, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users";
+
+        using var command = new SqliteCommand(sql, connection);
+        using var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            accounts.Add(new AccountModel
+            {
+                UserID = reader.GetInt32(0),
+                FirstName = reader.GetString(1),
+                LastName = reader.GetString(2),
+                Password = reader.GetString(3),
+                Email = reader.GetString(4),
+                CreatedAt = DateTime.Parse(reader.GetString(5)),
+                TelNum = reader.GetString(6),
+                LoyaltyPoints = reader.GetInt32(7)
+            });
+        }
+
+        return accounts;
     }
 
     public void Update(AccountModel updatedAccount)
     {
-        AccountModel existing = _accounts.FirstOrDefault(a => a.UserID == updatedAccount.UserID);
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
 
-        if (existing != null)
-        {
-            existing.Email = updatedAccount.Email;
-            existing.Password = updatedAccount.Password;
-            existing.FirstName = updatedAccount.FirstName;
-            existing.LastName = updatedAccount.LastName;
-            existing.TelNum = updatedAccount.TelNum;
-            existing.LoyaltyPoints = updatedAccount.LoyaltyPoints;
-            // CreatedAt blijft onveranderd
-        }
+        var sql = @"UPDATE Users
+                    SET Email = @Email, Password = @Password, FirstName = @FirstName,
+                        LastName = @LastName, TelNum = @TelNum, LoyaltyPoints = @LoyaltyPoints
+                    WHERE UserID = @UserID";
+
+        using var command = new SqliteCommand(sql, connection);
+        command.Parameters.AddWithValue("@Email", updatedAccount.Email);
+        command.Parameters.AddWithValue("@Password", updatedAccount.Password);
+        command.Parameters.AddWithValue("@FirstName", updatedAccount.FirstName);
+        command.Parameters.AddWithValue("@LastName", updatedAccount.LastName);
+        command.Parameters.AddWithValue("@TelNum", updatedAccount.TelNum);
+        command.Parameters.AddWithValue("@LoyaltyPoints", updatedAccount.LoyaltyPoints);
+        command.Parameters.AddWithValue("@UserID", updatedAccount.UserID);
+
+        command.ExecuteNonQuery();
     }
 
     public void Delete(int userId)
     {
-        AccountModel account = _accounts.FirstOrDefault(a => a.UserID == userId);
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
 
-        if (account != null)
-        {
-            _accounts.Remove(account);
-        }
+        var sql = "DELETE FROM Users WHERE UserID = @UserID";
+
+        using var command = new SqliteCommand(sql, connection);
+        command.Parameters.AddWithValue("@UserID", userId);
+
+        command.ExecuteNonQuery();
     }
 }

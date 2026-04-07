@@ -87,12 +87,16 @@ public class AccountPresentation
         Console.Write("Password: ");
         string password = Console.ReadLine();
 
+        Console.Write("Phone number: ");
+        string telNum = Console.ReadLine();
+
         AccountModel newAccount = new AccountModel
         {
             FirstName = firstName,
             LastName = lastName,
             Email = email,
-            Password = password
+            Password = password,
+            TelNum = telNum
         };
 
         bool success = _accountLogic.CreateAccount(newAccount);
