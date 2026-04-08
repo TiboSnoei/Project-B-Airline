@@ -8,6 +8,8 @@ public class AccountModel
     public string FirstName { get; set; }
     public string LastName { get; set; }
 
+    public string UserType { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public string TelNum { get; set; }

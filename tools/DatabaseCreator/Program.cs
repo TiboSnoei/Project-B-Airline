@@ -8,12 +8,6 @@ internal static class Creatdatabase
         var dbPath = Path.Combine("data", "airline.db");
         var schemaPath = Path.Combine("db", "schema.sqlite.sql");
 
-        if (!File.Exists(schemaPath))
-        {
-            Console.Error.WriteLine($"ERROR: Could not find schema file at '{schemaPath}'.");
-            return 1;
-        }
-
         Directory.CreateDirectory(Path.GetDirectoryName(dbPath)!);
 
         var connectionString = new SqliteConnectionStringBuilder

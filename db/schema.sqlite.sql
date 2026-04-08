@@ -13,7 +13,7 @@ CREATE TABLE Plane
 
 CREATE TABLE Users
 (
-  UserID        INTEGER      NOT NULL,
+  UserID        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   UserType      VARCHAR(100) NOT NULL,
   FirstName     VARCHAR(100) NOT NULL,
   LastName      VARCHAR(100) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Users
 
 CREATE TABLE Flight
 (
-  FlightID        INTEGER       NOT NULL,
+  FlightID        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
   TailNumber      VARCHAR(100)  NOT NULL,
   Destination     VARCHAR(100)  NOT NULL,
   Origin          VARCHAR(100)  NOT NULL,

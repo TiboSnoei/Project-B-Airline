@@ -43,7 +43,7 @@ public class AccountAccess
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
-        var sql = "SELECT UserID, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users WHERE Email = @Email";
+        var sql = "SELECT UserID, UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users WHERE Email = @Email";
 
         using var command = new SqliteCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
@@ -54,13 +54,14 @@ public class AccountAccess
             return new AccountModel
             {
                 UserID = reader.GetInt32(0),
-                FirstName = reader.GetString(1),
-                LastName = reader.GetString(2),
-                Password = reader.GetString(3),
-                Email = reader.GetString(4),
-                CreatedAt = DateTime.Parse(reader.GetString(5)),
-                TelNum = reader.GetString(6),
-                LoyaltyPoints = reader.GetInt32(7)
+                UserType = reader.GetString(1),
+                FirstName = reader.GetString(2),
+                LastName = reader.GetString(3),
+                Password = reader.GetString(4),
+                Email = reader.GetString(5),
+                CreatedAt = DateTime.Parse(reader.GetString(6)),
+                TelNum = reader.GetString(7),
+                LoyaltyPoints = reader.GetInt32(8)
             };
         }
 
@@ -93,7 +94,7 @@ public class AccountAccess
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
-        var sql = "SELECT UserID, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users";
+        var sql = "SELECT UserID, UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users";
 
         using var command = new SqliteCommand(sql, connection);
         using var reader = command.ExecuteReader();
@@ -103,13 +104,14 @@ public class AccountAccess
             accounts.Add(new AccountModel
             {
                 UserID = reader.GetInt32(0),
-                FirstName = reader.GetString(1),
-                LastName = reader.GetString(2),
-                Password = reader.GetString(3),
-                Email = reader.GetString(4),
-                CreatedAt = DateTime.Parse(reader.GetString(5)),
-                TelNum = reader.GetString(6),
-                LoyaltyPoints = reader.GetInt32(7)
+                UserType = reader.GetString(1),
+                FirstName = reader.GetString(2),
+                LastName = reader.GetString(3),
+                Password = reader.GetString(4),
+                Email = reader.GetString(5),
+                CreatedAt = DateTime.Parse(reader.GetString(6)),
+                TelNum = reader.GetString(7),
+                LoyaltyPoints = reader.GetInt32(8)
             });
         }
 
@@ -122,13 +124,14 @@ public class AccountAccess
         connection.Open();
 
         var sql = @"UPDATE Users
-                    SET Email = @Email, Password = @Password, FirstName = @FirstName,
+                    SET Email = @Email, Password = @Password, UserType = @UserType FirstName = @FirstName,
                         LastName = @LastName, TelNum = @TelNum, LoyaltyPoints = @LoyaltyPoints
                     WHERE UserID = @UserID";
 
         using var command = new SqliteCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", updatedAccount.Email);
         command.Parameters.AddWithValue("@Password", updatedAccount.Password);
+        command.Parameters.AddWithValue("@UserType", updatedAccount.UserType);
         command.Parameters.AddWithValue("@FirstName", updatedAccount.FirstName);
         command.Parameters.AddWithValue("@LastName", updatedAccount.LastName);
         command.Parameters.AddWithValue("@TelNum", updatedAccount.TelNum);
