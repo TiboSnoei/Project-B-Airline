@@ -74,8 +74,16 @@ class Program
                             break;
 
                         case "Login":
-                            loggedInUser = presentation.Login();
-                            Console.WriteLine($"{loggedInUser.UserType}");
+                                loggedInUser = presentation.Login();
+                            if (loggedInUser != null)
+                            {                                
+                                Console.WriteLine($"{loggedInUser.UserType}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Login failed.");
+                                Console.ReadKey();
+                            }
                             break;
 
                         case "Register":
