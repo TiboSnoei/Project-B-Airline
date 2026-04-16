@@ -23,11 +23,10 @@ public class FlightAccess
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
             INSERT INTO Flight 
-            (FlightId, TailNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee)
+            (TailNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee)
             VALUES 
-            ($FlightId, $TailNumber, $Origin, $Destination, $DepartureTime, $ArrivalTime, $LegroomFee, $DefaultPrice, $MealFee, $ChosenSeatFee, $ExtraLuggageFee)";
+            ($TailNumber, $Origin, $Destination, $DepartureTime, $ArrivalTime, $LegroomFee, $DefaultPrice, $MealFee, $ChosenSeatFee, $ExtraLuggageFee)";
 
-            cmd.Parameters.AddWithValue("$FlightId", flight.FlightId);
             cmd.Parameters.AddWithValue("$TailNumber", flight.TailNumber);
             cmd.Parameters.AddWithValue("$Origin", flight.Origin);
             cmd.Parameters.AddWithValue("$Destination", flight.Destination);

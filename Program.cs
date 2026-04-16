@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.X509Certificates; //useless?
 
 class Program
 {
@@ -76,7 +76,7 @@ class Program
                         case "Login":
                                 loggedInUser = presentation.Login();
                             if (loggedInUser != null)
-                            {                                
+                            {
                                 Console.WriteLine($"{loggedInUser.UserType}");
                             }
                             else
