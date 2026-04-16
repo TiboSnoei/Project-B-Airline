@@ -2,7 +2,7 @@ using System;
 
 public class FlightModel
 {
-    public int FlightId { get; set; } //pk
+    public int FlightId { get;} //pk
     public string TailNumber { get; set; } = string.Empty; //fk
     public string Destination { get; set; } = string.Empty;
     public string Origin { get; set; } = string.Empty;
