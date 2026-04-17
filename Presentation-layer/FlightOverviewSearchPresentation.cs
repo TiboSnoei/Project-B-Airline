@@ -1,18 +1,25 @@
 public class FlightOverviewSearchPresentation
 {
-    public void SearchFlight()
+    public void FlightSearchMenu()
     {
         // TODO: imploment search menu
 
-        string destinationselected = "";
+        // INFO: 4 lines below are dummy data
+        string destinationselected = "Berlin";
         bool returnflightselected = false;
-        DateTime departuredate = DateTime.Parse("2001-09-11 08:46:00");
+        DateTime departuredate = DateTime.Parse("2027-05-01 :00:00");
+        DateTime returndate = DateTime.Parse("2027-02-02 00:00:00");
 
-        SearchoverviewBuisness searchoverviewbuisness = new SearchoverviewBuisness(destinationselected, returnflightselected, departuredate);
-    }
+        if (!returnflightselected)
+        {
+            FlightOverviewCreator flightoverviewcreator = new FlightOverviewCreator(destinationselected, returnflightselected, departuredate);
+            flightoverviewcreator.GenerateFlightOverview();
+        }
 
-    public List<string> CreateFlightOverview()
-    {
-        List<FlightModel> SelectedFlights = new List<FlightModel>[SearchoverviewAcces.SearchFlights()];
+        else if (returnflightselected)
+        {
+            FlightOverviewCreator flightoverviewcreator = new FlightOverviewCreator(destinationselected, returnflightselected, departuredate, returndate);
+            flightoverviewcreator.GenerateFlightOverview();
+        }
     }
 }

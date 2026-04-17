@@ -4,7 +4,7 @@ public class SearchoverviewAcces
     private const string DatabaseLoc = "data/airline.db";
     private readonly string cs = $"Data Source={DatabaseLoc}";
 
-    internal List<FlightModel> SearchFlights(SearchoverviewBuisness search)
+    internal List<FlightModel> SearchFlights(SearchOverviewModel search)
     {
         var outbound = ExecuteFlightSearch(
             destination: search.Destinationselected,
@@ -35,6 +35,7 @@ public class SearchoverviewAcces
         DateTime start = date.Date;
         DateTime end = start.AddDays(1);
 
+        // TODO: imploment dapper
         cmd.CommandText =
             "SELECT FlightID, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, " +
             "LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee " +
