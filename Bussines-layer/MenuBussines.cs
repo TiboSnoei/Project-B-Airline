@@ -52,7 +52,21 @@ public class Menu
         return "Exit"; // to prevent build error.
     }
 
-    public string VerticalMenuWithColumns(string[] options, string header, string optionsHeader, string spacingFormat)
+    // see: https://web.archive.org/web/20120803184243/http://www.dylanbeattie.net/cheatsheets/dot_net_string_format_cheat_sheet.pdf
+    // string optionsHeader = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", "Tail Number", "Origin", "Destination", "Date");
+    // string option = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.tailNumber, flight.origin, flight.destination, flight.TakeOffTime);
+    // options = { option, option2, option3 }; -> gebruik gewoon een loopje om aan te maken, houd het netjes en makkelijk!
+    // returns: int -> plaats in array of lengte van de array indien exit
+
+    // voorbeeld om uit te proberen:
+    // string optionsHeader = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", "Tail Number", "Origin", "Destination", "Date");
+    // string option = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime);
+    // string option2 = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime);
+    // string option3 = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime);
+    // string header = "bazinga";
+    // string[] options = { option, option2, option3 };
+    // menu.VerticalMenuWithColumns(options, header, optionsHeader);
+    public int VerticalMenuWithColumns(string[] options, string header, string optionsHeader)
     {
         bool running = true;
         int index = 0;
@@ -62,6 +76,7 @@ public class Menu
             Console.Clear();
             Console.WriteLine($"=== {header} ===\n");
             Console.WriteLine("Use ↑/↓ and Enter to select:\n");
+            Console.WriteLine($"{optionsHeader}");
 
             for (int i = 0; i < options.Length; i++)
             {
@@ -71,7 +86,7 @@ public class Menu
                     Console.ForegroundColor = ConsoleColor.White;
                 }
 
-                Console.WriteLine($"  {options[i]}");
+                Console.WriteLine($"{options[i]}");
 
                 if (i == index) Console.ResetColor();
             }
@@ -89,14 +104,14 @@ public class Menu
                     break;
 
                 case ConsoleKey.Enter:
-                    return options[index];
+                    return index;
 
                 case ConsoleKey.Escape:
                     running = false;
-                    return "Exit";
+                    return options.Length;
             }
         }
-        return "Exit"; // to prevent build error.
+        return options.Length; // to prevent build error.
     }
 
     public string PlaneMenu()

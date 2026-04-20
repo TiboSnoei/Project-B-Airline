@@ -37,8 +37,6 @@ class Program
                 options = new string[] { "View Flights", "My Flights", "My Account", "Exit" };
             }
 
-            Console.Clear();
-
             switch (menu.VerticalMenu(options, header))
             {
                 case "View Flights":
