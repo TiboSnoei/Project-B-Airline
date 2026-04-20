@@ -1,3 +1,5 @@
+using System.ComponentModel.Design;
+
 public class FlightOverviewCreator
 {
     // Fields --------------------------------------------------------------------------------------------------------
@@ -50,14 +52,28 @@ public class FlightOverviewCreator
             filteredflights = GetFlightOverview(search);
         }
 
-        string spacingformat = "{0,-12} {1,-15} {2,-20} {3,-20} {4,-20} {5,-20} {6,-10}";
-        Console.WriteLine("========== Available Flights ==========\n");
-        Console.WriteLine("Use ↑/↓ and Enter to select:\n");
-        Console.WriteLine(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
-        Console.WriteLine("");
-        foreach(FlightModel filght in filteredflights)
+        try
         {
-            Console.WriteLine(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
+            // List<string> stringfilteredflights = new List<string>();
+            string spacingformat = "{0,-12} {1,-15} {2,-20} {3,-20} {4,-20} {5,-20} {6,-10}";
+            Console.WriteLine("========== Available Flights ==========\n");
+            Console.WriteLine("Use ↑/↓ and Enter to select:\n");
+            Console.WriteLine(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
+            Console.WriteLine("");
+            foreach(FlightModel filght in filteredflights)
+            {
+                // string stringflight = $"{filght.FlightId}, {filght.TailNumber}, {filght.Destination}, {filght.Origin}, {filght.TakeOffTime}, {filght.ArrivalTime}, {filght.DefaultPrice}";
+                // stringfilteredflights.Add(stringflight);
+                Console.WriteLine(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
+            }
+
+                // string[] arrayfilteredflight = stringfilteredflights.ToArray();
+                // Menu menu = new Menu();
+                // menu.verticalmenuwithdata(filteredflights);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error printing flight overview: {ex.Message}");
         }
     }
 }

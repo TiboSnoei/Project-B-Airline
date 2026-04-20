@@ -1,8 +1,13 @@
 using Microsoft.Data.Sqlite;
 public class SearchoverviewAcces
 {
-    private const string DatabaseLoc = "data/airline.db";
-    private readonly string cs = $"Data Source={DatabaseLoc}";
+    private readonly string _connectionString;
+    public SearchoverviewAcces()
+    {
+        string dbPath = "data/airline.db";
+        _connectionString = $"Data Source={dbPath}";
+    }
+
 
     internal List<FlightModel> SearchFlights(SearchOverviewModel search)
     {
@@ -29,33 +34,51 @@ public class SearchoverviewAcces
     {
         var results = new List<FlightModel>();
 
-        using var connection = DatabaseConnector.Open(cs);
-        using var cmd = connection.CreateCommand();
-
-        DateTime start = date.Date;
-        DateTime end = start.AddDays(1);
-
-        // TODO: imploment dapper
-        cmd.CommandText =
-            "SELECT FlightID, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, " +
-            "LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee " +
-            "FROM Flight " +
-            "WHERE Destination = @Destination " +
-            "AND Origin = @Origin " +
-            "AND DepartureTime >= @Start " +
-            "AND DepartureTime < @End;";
-
-        cmd.Parameters.AddWithValue("@Destination", destination);
-        cmd.Parameters.AddWithValue("@Origin", origin);
-        cmd.Parameters.AddWithValue("@Start", start.ToString("yyyy-MM-dd HH:mm:ss"));
-        cmd.Parameters.AddWithValue("@End", end.ToString("yyyy-MM-dd HH:mm:ss"));
-
-        using var reader = cmd.ExecuteReader();
-        while (reader.Read())
+        try
         {
-            results.Add(new FlightModel());
+            using var conn = new SqliteConnection(_connectionString);
+            conn.Open();
+            using var cmd = conn.CreateCommand();
+
+            DateTime start = date.Date;
+            DateTime end = start.AddDays(1);
+
+            // TODO: imploment dapper
+            cmd.CommandText =
+                "SELECT FlightID, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, DefaultPrice " +
+                "FROM Flight " +
+                "WHERE Destination = @Destination " +
+                "AND Origin = @Origin " +
+                "AND DepartureTime >= @Start " +
+                "AND DepartureTime < @End;";
+
+            cmd.Parameters.AddWithValue("@Destination", destination);
+            cmd.Parameters.AddWithValue("@Origin", origin);
+            cmd.Parameters.AddWithValue("@Start", start.ToString("yyyy-MM-dd HH:mm:ss"));
+            cmd.Parameters.AddWithValue("@End", end.ToString("yyyy-MM-dd HH:mm:ss"));
+
+            using var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                results.Add(new FlightModel
+                {
+                    FlightId = reader.GetInt32(0),
+                    TailNumber = reader.GetString(1),
+                    Origin = reader.GetString(2),
+                    Destination = reader.GetString(3),
+                    TakeOffTime = reader.GetDateTime(4),
+                    ArrivalTime = reader.GetDateTime(5),
+                    DefaultPrice = reader.GetInt32(6)
+                });
+            }
         }
 
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error searching in flights {ex.Message}");
+            return null!;
+        }
         return results;
     }
 }

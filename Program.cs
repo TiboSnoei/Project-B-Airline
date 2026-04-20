@@ -69,7 +69,9 @@ class Program
                     switch (choice)
                     {
                         case "View Flights":
-                            Console.WriteLine("Not implemented.");
+                            // Console.WriteLine("Not implemented.");
+                            FlightOverviewSearchPresentation flightOverviewSearchPresentation = new FlightOverviewSearchPresentation();
+                            flightOverviewSearchPresentation.FlightSearchMenu();
                             Console.ReadKey();
                             break;
 
