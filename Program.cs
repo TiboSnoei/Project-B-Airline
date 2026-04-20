@@ -34,7 +34,7 @@ class Program
             }
             else
             {
-                options = new string[] { "View Flights", "My flights", "My account", "Exit" };
+                options = new string[] { "View Flights", "My Flights", "My Account", "Exit" };
             }
 
             Console.Clear();
@@ -90,6 +90,11 @@ class Program
 
                 case "Exit":
                     running = false;
+                    break;
+                
+                default:
+                    Console.WriteLine("Somehow you got an non-existing input!");
+                    Console.ReadKey();
                     break;
             }
         }

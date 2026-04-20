@@ -1,5 +1,6 @@
 public class Admin
 {
+    //needs a refactor and should extend the account class
     public void admin_menu()
     {
         FlightPresentation flight = new FlightPresentation();
