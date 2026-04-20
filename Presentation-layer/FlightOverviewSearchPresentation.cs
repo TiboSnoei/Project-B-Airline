@@ -6,9 +6,9 @@ public class FlightOverviewSearchPresentation
 
         // INFO: 4 lines below are dummy data
         string destinationselected = "Berlin";
-        bool returnflightselected = false;
-        DateTime departuredate = DateTime.Parse("2026-05-01 12:45:00");
-        DateTime returndate = DateTime.Parse("2026-05-01 14:15:00");
+        bool returnflightselected = true;
+        DateTime departuredate = DateTime.Parse("2026-05-01 00:00:00");
+        DateTime returndate = DateTime.Parse("2026-06-01 00:00:00");
 
         if (!returnflightselected)
         {

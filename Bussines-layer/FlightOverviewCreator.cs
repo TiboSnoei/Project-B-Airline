@@ -55,7 +55,7 @@ public class FlightOverviewCreator
         try
         {
             // List<string> stringfilteredflights = new List<string>();
-            string spacingformat = "{0,-12} {1,-15} {2,-20} {3,-20} {4,-20} {5,-20} {6,-10}";
+            string spacingformat = "{0,-12} {1,-15} {2,-20} {3,-20} {4,-25} {5,-25} {6,-10}";
             Console.WriteLine("========== Available Flights ==========\n");
             Console.WriteLine("Use ↑/↓ and Enter to select:\n");
             Console.WriteLine(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
