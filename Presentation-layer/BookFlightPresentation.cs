@@ -2,20 +2,12 @@ public class BookFlight
 {
     public BookFlight(FlightModel chosenflight)
     {
-        // vraag user of ze de gevonden booking vast willen zetten, als user confirmt word de boeking in de database gezet.
-        // de user moet een stoel toegewezen krijgen en de prijs moet zichtbaar zijn.
-        //als de user de booking niet confirmt worden ze teruggestuurd naar het overzicht.
-
-        // method: show_price -- business layer? (BookFlightBusiness) TODO: Zie BookFlightBusiness.cs
-        // method: assign_seat -- business layer (BookflightBusiness) TODO: Zie BookFlightBusiness.cs
-        // method: save_booking -- data access layer (BookFlightAccess)
-        // method: show_flight_details -- presentation layer (deze file)
-        // maak customer flight aan, flight + user
-
+        // TODO: Console.Clear in menuhandler moet verwijderd worden en moet hier lokaal gebeuren.
+        
         Console.WriteLine($"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.");
-        Console.WriteLine($"The price for this flight is {chosenflight.DefaultPrice}.");
+        Console.WriteLine($"The price for this flight is {chosenflight.DefaultPrice}."); //TODO: price laten zien + prijs van de extras
         Console.WriteLine("Do you want to book this flight?");
-        // gebruik menu handler
+
         string[] options = { "Yes", "No" };
         Menu menu = new Menu();
         string choice = menu.VerticalMenu(options, "Confirm Booking");
@@ -23,10 +15,24 @@ public class BookFlight
         switch (choice)
         {
             case "Yes":
-                // assign seat
-                // show price
-                // save booking
+                // TODO: assign seat (Zie BookFlightBusiness.cs)
                 Console.WriteLine("Booking confirmed! Log in to or create your account to check your booking details.");
+
+                var customerflight = new CustomerFlightModel
+                {
+                    UserID = 1, // TODO: ID halen van ingelogde user
+                    FlightID = chosenflight.FlightId,
+                    Seat = "18B", // dummy data
+                    SeatChosen = false, // dummy data
+                    ExtraLegroom = false, // dummy data
+                    OnflightMeal = false, // dummy data
+                    ExtraLuggage = false // dummy data
+                };
+
+                // Moet naar de access layer om naar de database gestuurd te worden
+                BookFlightAccess bookFlightAccess = new BookFlightAccess();
+                bookFlightAccess.Write(customerflight);
+
                 break;
 
             case "No":

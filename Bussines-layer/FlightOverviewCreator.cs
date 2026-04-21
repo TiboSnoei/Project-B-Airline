@@ -75,8 +75,8 @@ public class FlightOverviewCreator
                 int chosenflightindex = menu.VerticalMenuWithColumns(arrayfilteredflight, header, optionsHeader);
                 if (chosenflightindex == arrayfilteredflight.Length) {return;}
                 else {chosenflight = filteredflights[chosenflightindex];}
-                // BookFlight bookflight = new BookFlight(chosenflight); | Roept de BookFlight class aan van reza (is nog niet af).
-                Console.WriteLine(chosenflight.ToString());// gebruik ik voor testing!
+                BookFlight bookflight = new BookFlight(chosenflight);
+                // Console.WriteLine(chosenflight.ToString());// gebruik ik voor testing!
         }
         catch (Exception ex)
         {
