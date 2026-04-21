@@ -54,22 +54,29 @@ public class FlightOverviewCreator
 
         try
         {
-            // List<string> stringfilteredflights = new List<string>();
-            string spacingformat = "{0,-12} {1,-15} {2,-20} {3,-20} {4,-25} {5,-25} {6,-10}";
-            Console.WriteLine("========== Available Flights ==========\n");
-            Console.WriteLine("Use ↑/↓ and Enter to select:\n");
-            Console.WriteLine(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
-            Console.WriteLine("");
+            List<string> stringfilteredflights = new List<string>();
+            string spacingformat = "{0,-12}|{1,-15}|{2,-20}|{3,-20}|{4,-25}|{5,-25}|{6,-10}";
+            string header = "Available Flights";
+            string optionsHeader = string.Format(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
+            // Console.WriteLine("========== Available Flights ==========");
+            // Console.WriteLine("Use ↑/↓ and Enter to select:\n");
+            // Console.WriteLine(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
+            // Console.WriteLine("");
             foreach(FlightModel filght in filteredflights)
             {
-                // string stringflight = $"{filght.FlightId}, {filght.TailNumber}, {filght.Destination}, {filght.Origin}, {filght.TakeOffTime}, {filght.ArrivalTime}, {filght.DefaultPrice}";
-                // stringfilteredflights.Add(stringflight);
-                Console.WriteLine(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
+                string option = string.Format(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
+                stringfilteredflights.Add(option);
+                // Console.WriteLine(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
             }
 
-                // string[] arrayfilteredflight = stringfilteredflights.ToArray();
-                // Menu menu = new Menu();
-                // menu.verticalmenuwithdata(filteredflights);
+                FlightModel chosenflight;
+                string[] arrayfilteredflight = stringfilteredflights.ToArray();
+                Menu menu = new Menu();
+                int chosenflightindex = menu.VerticalMenuWithColumns(arrayfilteredflight, header, optionsHeader);
+                if (chosenflightindex == arrayfilteredflight.Length) {return;}
+                else {chosenflight = filteredflights[chosenflightindex];}
+                // BookFlight bookflight = new BookFlight(chosenflight); | Roept de BookFlight class aan van reza (is nog niet af).
+                Console.WriteLine(chosenflight.ToString());// gebruik ik voor testing!
         }
         catch (Exception ex)
         {
