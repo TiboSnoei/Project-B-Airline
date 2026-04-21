@@ -42,6 +42,7 @@ public class FlightLogic
         //This shouldnt be used. Tibo should make the indexed and filtered flight list.
         var flights = _flightAccess.GetAll();
 
+        Console.Clear();
         Console.WriteLine("=== All Flights ===");
         foreach (var flight in flights)
         {

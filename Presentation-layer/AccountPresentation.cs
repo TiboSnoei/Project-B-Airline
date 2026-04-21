@@ -60,10 +60,12 @@ public AccountModel Login()
     if (account != null)
     {
         Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
+        Console.ReadKey(); // won't be seen by user if line is removed
         return account; // now valid
     }
     else
     {
+        // TODO: add reason why invalid and requery 
         Console.WriteLine("\nInvalid email or password.");
     }
 

@@ -12,15 +12,18 @@ class Program
 
         AccountPresentation presentation = new AccountPresentation();
         AccountModel loggedInUser = null;
+        Menu menu = new Menu();
 
-        //TODO: Dit menu moet natuurlijk een menu class worden. Dit is te bulky nog :)
         bool running = true;
-        int index = 0;
 
         while (running)
         {
             string[] options;
+            string header = "Flight Booking System";
 
+            // TODO: refactor to user.mainMenu
+            // dit is clunky en kan gewoon in hen eigen class.
+            // de enige logica hier zou van een uitgelogde gebruiker moeten zijn imo?
             if (loggedInUser == null)
             {
                 options = new string[] { "View Flights", "Login", "Register", "Exit" };
@@ -31,43 +34,25 @@ class Program
             }
             else
             {
-                options = new string[] { "View Flights", "My flights", "My account", "Exit" };
+                options = new string[] { "View Flights", "My Flights", "My Account", "Exit" };
             }
 
-            Console.Clear();
-            Console.WriteLine("=== Flight Booking System ===\n");
-            Console.WriteLine("Use ↑/↓ and Enter to select:\n");
-
-            for (int i = 0; i < options.Length; i++)
+            switch (menu.VerticalMenu(options, header))
             {
-                if (i == index)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkCyan;
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-
-                Console.WriteLine($"  {options[i]}");
-
-                if (i == index) Console.ResetColor();
-            }
-
-            var key = Console.ReadKey(true).Key;
-
-            switch (key)
-            {
-                case ConsoleKey.UpArrow:
-                    index = (index - 1 + options.Length) % options.Length;
+                case "View Flights":
+                    Console.WriteLine("Not implemented.");
+                    Console.ReadKey();
                     break;
 
-                case ConsoleKey.DownArrow:
-                    index = (index + 1) % options.Length;
-                    break;
-
-                case ConsoleKey.Enter:
-                    string choice = options[index];
-
-                    switch (choice)
+                case "Login":
+                        loggedInUser = presentation.Login();
+                    if (loggedInUser != null)
+                    {                                
+                        Console.WriteLine($"{loggedInUser.UserType}");
+                    }
+                    else
                     {
+<<<<<<< HEAD
                         case "View Flights":
                             Console.WriteLine("Not implemented.");
                             Console.ReadKey();
@@ -118,12 +103,49 @@ class Program
                         case "Exit":
                             running = false;
                             break;
+=======
+                        Console.WriteLine("Login failed.");
+                        Console.ReadKey();
+>>>>>>> MenuHandler
                     }
                     break;
-                    
 
-                case ConsoleKey.Escape:
+                case "Register":
+                    presentation.Register();
+                    break;
+
+                case "My Flights":
+                    Console.WriteLine("Not implemented.");
+                    Console.ReadKey();
+                    break;
+
+                case "My Account":
+                    Console.WriteLine("Not implemented.");
+                    Console.ReadKey();
+                    break;
+
+                case "Flights":
+                    Admin admin = new Admin();
+                    admin.admin_menu();
+                    break;
+
+                case "Users":
+                    Console.WriteLine("Not implemented.");
+                    Console.ReadKey();
+                    break;
+
+                case "Booked Flights":
+                    Console.WriteLine("Not implemented.");
+                    Console.ReadKey();
+                    break;
+
+                case "Exit":
                     running = false;
+                    break;
+                
+                default:
+                    Console.WriteLine("Somehow you got an non-existing input!");
+                    Console.ReadKey();
                     break;
             }
         }
