@@ -52,61 +52,8 @@ class Program
                     }
                     else
                     {
-<<<<<<< HEAD
-                        case "View Flights":
-                            Console.WriteLine("Not implemented.");
-                            Console.ReadKey();
-                            break;
-
-                        case "Login":
-                                loggedInUser = presentation.Login();
-                            if (loggedInUser != null)
-                            {
-                                Console.WriteLine($"{loggedInUser.UserType}");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Login failed.");
-                                Console.ReadKey();
-                            }
-                            break;
-
-                        case "Register":
-                            presentation.Register();
-                            break;
-
-                        case "My Flights":
-                            Console.WriteLine("Not implemented.");
-                            Console.ReadKey();
-                            break;
-
-                        case "My Account":
-                            Console.WriteLine("Not implemented.");
-                            Console.ReadKey();
-                            break;
-
-                        case "Flights":
-                            Admin admin = new Admin();
-                            admin.admin_menu();
-                            break;
-
-                        case "Users":
-                            Console.WriteLine("Not implemented.");
-                            Console.ReadKey();
-                            break;
-
-                        case "Booked Flights":
-                            Console.WriteLine("Not implemented.");
-                            Console.ReadKey();
-                            break;
-
-                        case "Exit":
-                            running = false;
-                            break;
-=======
                         Console.WriteLine("Login failed.");
                         Console.ReadKey();
->>>>>>> MenuHandler
                     }
                     break;
 
