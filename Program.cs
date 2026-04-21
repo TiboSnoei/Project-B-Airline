@@ -40,7 +40,8 @@ class Program
             switch (menu.VerticalMenu(options, header))
             {
                 case "View Flights":
-                    Console.WriteLine("Not implemented.");
+                    FlightOverviewSearchPresentation flightOverviewSearchPresentation = new FlightOverviewSearchPresentation();
+                    flightOverviewSearchPresentation.FlightSearchMenu();
                     Console.ReadKey();
                     break;
 
