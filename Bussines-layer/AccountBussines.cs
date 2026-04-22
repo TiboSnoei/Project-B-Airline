@@ -24,6 +24,9 @@ public class AccountLogic
             return false;
         }
 
+        // Hash het wachtwoord voordat het wordt opgeslagen
+        newAccount.Password = BCrypt.Net.BCrypt.HashPassword(newAccount.Password);
+
         _accountAccess.Write(newAccount);
         return true;
     }
@@ -32,7 +35,7 @@ public class AccountLogic
     {
         AccountModel account = _accountAccess.GetByEmail(email);
 
-        if (account != null && account.Password == password)
+        if (account != null && BCrypt.Net.BCrypt.Verify(password, account.Password))
         {
             return account;
         }
