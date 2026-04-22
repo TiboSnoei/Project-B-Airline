@@ -75,6 +75,7 @@ public class DatabaseSeeder
             );",
 
             @"CREATE TABLE CustomerFlight (
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 UserID INTEGER NOT NULL,
                 FlightID INTEGER NOT NULL,
                 Seat VARCHAR(100) NOT NULL,
@@ -82,7 +83,7 @@ public class DatabaseSeeder
                 ExtraLegroom BOOLEAN NOT NULL,
                 OnflightMeal BOOLEAN NOT NULL,
                 ExtraLuggage BOOLEAN NOT NULL,
-                PRIMARY KEY(UserID, FlightID),
+                PRIMARY KEY(ID),
                 FOREIGN KEY(UserID) REFERENCES Users(UserID),
                 FOREIGN KEY(FlightID) REFERENCES Flight(FlightID)
             );"
@@ -115,7 +116,16 @@ public class DatabaseSeeder
             "('Admin', 'Ad', 'Min', 'Admin_1', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0);",
 
             "INSERT INTO Flight (TailNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee) VALUES " +
-            "('HR101', 'Berlin', 'Rotterdam', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100);",
+            "('HR101', 'Rotterdam', 'Berlin', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
+            "('HR101', 'Rotterdam', 'Berlin', '2025-05-01 11:45:00', '2026-05-01 13:15:00', 100, 100, 100, 100, 100)," +
+            "('HR102', 'Rotterdam', 'Berlin', '2026-05-01 10:45:00', '2026-05-01 12:15:00', 100, 100, 100, 100, 100)," +
+            "('HR102', 'Rotterdam', 'Berlin', '2026-05-01 09:45:00', '2026-05-01 11:15:00', 100, 100, 100, 100, 100)," +
+            "('HR102', 'Rotterdam', 'Berlin', '2026-05-01 08:45:00', '2026-05-01 10:15:00', 100, 100, 100, 100, 100)," +
+            "('HR103', 'Berlin', 'Rotterdam', '2026-06-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
+            "('HR103', 'Berlin', 'Rotterdam', '2026-06-01 11:45:00', '2026-05-01 13:15:00', 100, 100, 100, 100, 100)," +
+            "('HR103', 'Berlin', 'Rotterdam', '2026-06-01 10:45:00', '2026-05-01 12:15:00', 100, 100, 100, 100, 100)," +
+            "('HR104', 'Berlin', 'Rotterdam', '2026-06-01 09:45:00', '2026-05-01 11:15:00', 100, 100, 100, 100, 100)," +
+            "('HR104', 'Rotterdam', 'Madrid', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100);",
 
             "INSERT INTO CustomerFlight (UserID, FlightID, Seat, SeatChosen, ExtraLegroom, OnflightMeal, ExtraLuggage) VALUES " +
             "(1, 1, '12C', 0, 0, 0, 0);"

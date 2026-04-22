@@ -26,7 +26,7 @@ class Program
             // de enige logica hier zou van een uitgelogde gebruiker moeten zijn imo?
             if (loggedInUser == null)
             {
-                options = new string[] { "View Flights", "Login", "Register", "Exit" };
+                options = new string[] { "Search Flights", "Login", "Register", "Exit" };
             }
             else if (loggedInUser.UserType == "Admin")
             {
@@ -34,13 +34,14 @@ class Program
             }
             else
             {
-                options = new string[] { "View Flights", "My Flights", "My Account", "Exit" };
+                options = new string[] { "Search Flights", "My Flights", "My Account", "Exit" };
             }
 
             switch (menu.VerticalMenu(options, header))
             {
-                case "View Flights":
-                    Console.WriteLine("Not implemented.");
+                case "Search Flights":
+                    FlightOverviewSearchPresentation flightOverviewSearchPresentation = new FlightOverviewSearchPresentation();
+                    flightOverviewSearchPresentation.FlightSearchMenu();
                     Console.ReadKey();
                     break;
 
