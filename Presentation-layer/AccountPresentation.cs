@@ -4,6 +4,35 @@ public class AccountPresentation
 {
     private AccountLogic _accountLogic = new AccountLogic();
 
+    private static string ReadPassword()
+    {
+        string password = "";
+        ConsoleKeyInfo key;
+
+        while (true)
+        {
+            key = Console.ReadKey(true);
+
+            if (key.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+                break;
+            }
+            else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+            {
+                password = password[..^1];
+                Console.Write("\b \b");
+            }
+            else if (!char.IsControl(key.KeyChar))
+            {
+                password += key.KeyChar;
+                Console.Write("*");
+            }
+        }
+
+        return password;
+    }
+
     public void Register()
     {
         Console.Clear();
@@ -19,7 +48,7 @@ public class AccountPresentation
         string email = Console.ReadLine();
 
         Console.Write("Password: ");
-        string password = Console.ReadLine();
+        string password = ReadPassword();
 
         Console.Write("Phone number: ");
         string telNum = Console.ReadLine();
@@ -53,7 +82,7 @@ public AccountModel Login()
     string email = Console.ReadLine();
 
     Console.Write("Password: ");
-    string password = Console.ReadLine();
+    string password = ReadPassword();
 
     AccountModel account = _accountLogic.CheckLogin(email, password);
 

@@ -102,6 +102,9 @@ public class DatabaseSeeder
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
+        string hashedBobPassword = BCrypt.Net.BCrypt.HashPassword("BobMarten_120805");
+        string hashedAdminPassword = BCrypt.Net.BCrypt.HashPassword("Admin_1");
+
         var commands = new List<string>
         {
             "INSERT INTO Plane (TailNumber, SeatCount, Model) VALUES " +
@@ -111,8 +114,8 @@ public class DatabaseSeeder
             "('HR104', 345, 'Airbus 330');",
 
             "INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints) VALUES " +
-            "('Customer', 'Bob', 'Marten', 'BobMarten_120805', 'BobMarten@gmail.com', '2026-05-01 00:00:00', '0676543566', 0)," +
-            "('Admin', 'Ad', 'Min', 'Admin_1', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0);",
+            $"('Customer', 'Bob', 'Marten', '{hashedBobPassword}', 'BobMarten@gmail.com', '2026-05-01 00:00:00', '0676543566', 0)," +
+            $"('Admin', 'Ad', 'Min', '{hashedAdminPassword}', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0);",
 
             "INSERT INTO Flight (TailNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee) VALUES " +
             "('HR101', 'Rotterdam', 'Berlin', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
