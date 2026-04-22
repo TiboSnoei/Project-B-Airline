@@ -46,7 +46,7 @@ class Program
                     break;
 
                 case "Login":
-                    loggedInUser = presentation.Login();
+                        loggedInUser = presentation.Login();
                     if (loggedInUser != null)
                     {                                
                         Console.WriteLine($"{loggedInUser.UserType}");
