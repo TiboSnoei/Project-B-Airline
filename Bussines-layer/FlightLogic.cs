@@ -37,17 +37,16 @@ public class FlightLogic
         return _flightAccess.Write(flight);
     }
 
-    public void ListFlights()
+    public bool EditFlight(FlightModel flight)
     {
-        //This shouldnt be used. Tibo should make the indexed and filtered flight list.
-        var flights = _flightAccess.GetAll();
+        // TODO: edit not only fees, but times aswell
+        // TODO: add validation
+        return _flightAccess.Update(flight);
 
-        Console.Clear();
-        Console.WriteLine("=== All Flights ===");
-        foreach (var flight in flights)
-        {
-            Console.WriteLine($"FlightID: {flight.FlightId}, TailNumber: {flight.TailNumber}, Origin: {flight.Origin}, Destination: {flight.Destination}, TakeOff: {flight.TakeOffTime}, Arrival: {flight.ArrivalTime}");
-        }
-        Console.WriteLine("===================");
+    }
+
+    public List<FlightModel> GetAll()
+    {
+        return _flightAccess.GetAll();
     }
 }

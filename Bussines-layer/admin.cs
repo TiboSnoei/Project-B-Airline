@@ -15,8 +15,7 @@ public class Admin
                 flight.CreateFlight();
                 break;
             case "List Flights":
-                flight._flightLogic.ListFlights();
-                Console.ReadKey();
+                flight.ListFlights();
                 break;
             case "Exit":
                 break;

@@ -48,6 +48,51 @@ public class FlightAccess
         }
     }
 
+    public bool Update(FlightModel flight)
+    {
+        try
+        {
+            using var conn = new SqliteConnection(_connectionString);
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"
+                UPDATE Flight
+                SET 
+                    TailNumber = $TailNumber,
+                    Origin = $Origin,
+                    Destination = $Destination,
+                    DepartureTime = $DepartureTime,
+                    ArrivalTime = $ArrivalTime,
+                    LegroomFee = $LegroomFee,
+                    DefaultPrice = $DefaultPrice,
+                    MealFee = $MealFee,
+                    ChosenSeatFee = $ChosenSeatFee,
+                    ExtraLuggageFee = $ExtraLuggageFee
+                WHERE FlightId = $FlightId";
+
+            cmd.Parameters.AddWithValue("$FlightId", flight.FlightId);
+            cmd.Parameters.AddWithValue("$TailNumber", flight.TailNumber);
+            cmd.Parameters.AddWithValue("$Origin", flight.Origin);
+            cmd.Parameters.AddWithValue("$Destination", flight.Destination);
+            cmd.Parameters.AddWithValue("$DepartureTime", flight.TakeOffTime);
+            cmd.Parameters.AddWithValue("$ArrivalTime", flight.ArrivalTime);
+            cmd.Parameters.AddWithValue("$LegroomFee", flight.LegroomFee);
+            cmd.Parameters.AddWithValue("$DefaultPrice", flight.DefaultPrice);
+            cmd.Parameters.AddWithValue("$MealFee", flight.MealPrice);
+            cmd.Parameters.AddWithValue("$ChosenSeatFee", flight.ChosenSeatFee);
+            cmd.Parameters.AddWithValue("$ExtraLuggageFee", flight.ExtraLuggageFee);
+            
+            int rowsAffected = cmd.ExecuteNonQuery();
+            return rowsAffected > 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating flight in database: {ex.Message}");
+            return false;
+        }
+    }
+
     public List<FlightModel> GetAll()
     {
         var flights = new List<FlightModel>();
