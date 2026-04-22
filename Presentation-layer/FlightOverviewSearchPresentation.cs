@@ -7,7 +7,6 @@ public class FlightOverviewSearchPresentation
         bool returnflightselected;
         DateTime returndate;
 
-        // TODO: imploment search menu
         Console.Clear();
         Console.WriteLine("===Search Flights===");
         destinationselected = GetValidString("Destination: ");
@@ -15,8 +14,8 @@ public class FlightOverviewSearchPresentation
         string[] options = {"Yes", "No"};
         Menu menu = new Menu();
         string returnflightawnser = menu.VerticalMenu(options, "Do you want a return flight");
-        // string returnflightawnser = GetValidString("Do you want a return flight (yes/no)");
-        if (returnflightawnser == "Yes") 
+        Console.Clear();
+        if (returnflightawnser == "Yes")
         {
             returnflightselected = true;
             returndate = GetValidDate("Return Flight Date (yyyy-mm-dd)");

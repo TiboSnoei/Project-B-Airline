@@ -104,7 +104,7 @@ public class FlightOverviewCreator
                 else {chosenoutboundflight = outboundflights[chosenoutboundflightindex];}
 
                 FlightModel choseninboundflight;
-                string[] arrayinboundflight = stringoutboundflights.ToArray();
+                string[] arrayinboundflight = stringinboundflights.ToArray();
                 Menu inboundmenu = new Menu();
                 int choseninboundflightindex = inboundmenu.VerticalMenuWithColumns(arrayinboundflight, header, optionsHeader);
                 if (choseninboundflightindex == arrayinboundflight.Length) {return;}
