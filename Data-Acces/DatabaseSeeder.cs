@@ -83,7 +83,6 @@ public class DatabaseSeeder
                 ExtraLegroom BOOLEAN NOT NULL,
                 OnflightMeal BOOLEAN NOT NULL,
                 ExtraLuggage BOOLEAN NOT NULL,
-                PRIMARY KEY(ID),
                 FOREIGN KEY(UserID) REFERENCES Users(UserID),
                 FOREIGN KEY(FlightID) REFERENCES Flight(FlightID)
             );"

@@ -90,7 +90,7 @@ public class FlightOverviewCreator
                 int chosenflightindex = menu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
                 if (chosenflightindex == arrayoutboundflight.Length) {return;}
                 else {chosenflight = outboundflights[chosenflightindex];}
-                BookFlight bookflight = new BookFlight(chosenoutboundflight);
+                // BookFlight bookflight = new BookFlight(chosenoutboundflight); //????????
             }
 
             else if (Returnflightselected)
@@ -110,7 +110,6 @@ public class FlightOverviewCreator
                 else {choseninboundflight = inboundflights[choseninboundflightindex];}
 
                 BookFlight bookflight = new BookFlight(chosenoutboundflight);
-                BookFlight bookflight = new BookFlight(choseninboundflight);
             }
         }
         catch (Exception ex)
