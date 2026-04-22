@@ -3,13 +3,11 @@ public class BookFlight
     public BookFlight(FlightModel chosenflight)
     {
         // TODO: Console.Clear in menuhandler moet verwijderd worden en moet hier lokaal gebeuren.
-        Console.WriteLine($"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.");
-        Console.WriteLine($"The price for this flight is {chosenflight.DefaultPrice}."); //TODO: price laten zien + prijs van de extras
-        Console.WriteLine("Do you want to book this flight?");
 
         string[] options = { "Yes", "No" };
         Menu menu = new Menu();
-        string choice = menu.VerticalMenu(options, "Confirm Booking");
+        string context = $"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
+        string choice = menu.VerticalMenu(options, "Confirm Booking", context);
 
         switch (choice)
         {
@@ -33,11 +31,11 @@ public class BookFlight
                 bookFlightAccess.Write(customerflight);
 
                 Console.Clear();
-                Console.WriteLine("You're almost done! Please log in or create an account to complete your booking.");
 
                 string[] options2 = { "Log In", "Create Account" };
                 Menu menu2 = new Menu();
-                string choice2 = menu2.VerticalMenu(options2, "Do you want to log in or register a new account?");
+                string context2 = "To complete your booking, you need to have an account. Please choose one of the options below to proceed.\n";
+                string choice2 = menu2.VerticalMenu(options2, "Do you want to log in or register a new account?", context2);
 
                 switch (choice2)
                 {
