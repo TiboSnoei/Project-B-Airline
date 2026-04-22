@@ -54,29 +54,68 @@ public class FlightOverviewCreator
 
         try
         {
-            List<string> stringfilteredflights = new List<string>();
+            List<FlightModel> outboundflights = new List<FlightModel>();
+            List<FlightModel> inboundflights = new List<FlightModel>();
+            List<string> stringoutboundflights = new List<string>();
+            List<string> stringinboundflights = new List<string>();
+
+            foreach(FlightModel flight in filteredflights)
+            {
+                if (flight.Origin == "Rotterdam") {outboundflights.Add(flight);}
+                if (flight.Destination == "Rotterdam") {inboundflights.Add(flight);}
+            }
+
             string spacingformat = "{0,-12}|{1,-15}|{2,-20}|{3,-20}|{4,-25}|{5,-25}|{6,-10}";
             string header = "Available Flights";
             string optionsHeader = string.Format(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
-            // Console.WriteLine("========== Available Flights ==========");
-            // Console.WriteLine("Use ↑/↓ and Enter to select:\n");
-            // Console.WriteLine(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
-            // Console.WriteLine("");
-            foreach(FlightModel filght in filteredflights)
+            
+
+            foreach(FlightModel flight in outboundflights)
             {
-                string option = string.Format(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
-                stringfilteredflights.Add(option);
-                // Console.WriteLine(spacingformat, filght.FlightId, filght.TailNumber, filght.Destination, filght.Origin, filght.TakeOffTime, filght.ArrivalTime, filght.DefaultPrice);
+                string option = string.Format(spacingformat, flight.FlightId, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
+                stringoutboundflights.Add(option);
             }
 
+            foreach(FlightModel flight in inboundflights)
+            {
+                string option = string.Format(spacingformat, flight.FlightId, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
+                stringinboundflights.Add(option);
+            }
+
+            if (!Returnflightselected)
+            {
                 FlightModel chosenflight;
-                string[] arrayfilteredflight = stringfilteredflights.ToArray();
+                string[] arrayoutboundflight = stringoutboundflights.ToArray();
                 Menu menu = new Menu();
-                int chosenflightindex = menu.VerticalMenuWithColumns(arrayfilteredflight, header, optionsHeader);
-                if (chosenflightindex == arrayfilteredflight.Length) {return;}
-                else {chosenflight = filteredflights[chosenflightindex];}
-                // BookFlight bookflight = new BookFlight(chosenflight); | Roept de BookFlight class aan van reza (is nog niet af).
+                int chosenflightindex = menu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
+                if (chosenflightindex == arrayoutboundflight.Length) {return;}
+                else {chosenflight = outboundflights[chosenflightindex];}
+                // BookFlight bookflight = new BookFlight(chosenoutboundflight); | Roept de BookFlight class aan van reza (is nog niet af).
                 Console.WriteLine(chosenflight.ToString());// gebruik ik voor testing!
+            }
+
+            else if (Returnflightselected)
+            {
+                FlightModel chosenoutboundflight;
+                string[] arrayoutboundflight = stringoutboundflights.ToArray();
+                Menu outboundmenu = new Menu();
+                int chosenoutboundflightindex = outboundmenu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
+                if (chosenoutboundflightindex == arrayoutboundflight.Length) {return;}
+                else {chosenoutboundflight = outboundflights[chosenoutboundflightindex];}
+
+                FlightModel choseninboundflight;
+                string[] arrayinboundflight = stringoutboundflights.ToArray();
+                Menu inboundmenu = new Menu();
+                int choseninboundflightindex = inboundmenu.VerticalMenuWithColumns(arrayinboundflight, header, optionsHeader);
+                if (choseninboundflightindex == arrayinboundflight.Length) {return;}
+                else {choseninboundflight = inboundflights[choseninboundflightindex];}
+
+                // BookFlight bookflight = new BookFlight(chosenoutboundflight); | Roept de BookFlight class aan van reza (is nog niet af).
+                // BookFlight bookflight = new BookFlight(choseninboundflight); | Roept de BookFlight class aan van reza (is nog niet af).
+
+                Console.WriteLine(chosenoutboundflight.ToString());// gebruik ik voor testing!
+                Console.WriteLine(choseninboundflight.ToString());// gebruik ik voor testing!
+            }
         }
         catch (Exception ex)
         {
