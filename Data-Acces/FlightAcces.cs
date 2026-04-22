@@ -112,6 +112,7 @@ public class FlightAccess
         {
             flights.Add(new FlightModel
             {
+                FlightId = reader.GetInt32(0),
                 TailNumber = reader.GetString(1),
                 Origin = reader.GetString(2),
                 Destination = reader.GetString(3),
