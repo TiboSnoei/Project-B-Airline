@@ -75,6 +75,7 @@ public class DatabaseSeeder
             );",
 
             @"CREATE TABLE CustomerFlight (
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 UserID INTEGER NOT NULL,
                 FlightID INTEGER NOT NULL,
                 Seat VARCHAR(100) NOT NULL,
@@ -82,7 +83,6 @@ public class DatabaseSeeder
                 ExtraLegroom BOOLEAN NOT NULL,
                 OnflightMeal BOOLEAN NOT NULL,
                 ExtraLuggage BOOLEAN NOT NULL,
-                PRIMARY KEY(UserID, FlightID),
                 FOREIGN KEY(UserID) REFERENCES Users(UserID),
                 FOREIGN KEY(FlightID) REFERENCES Flight(FlightID)
             );"
