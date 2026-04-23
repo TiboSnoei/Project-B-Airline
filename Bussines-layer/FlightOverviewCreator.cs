@@ -58,6 +58,7 @@ public class FlightOverviewCreator
             List<FlightModel> inboundflights = new List<FlightModel>();
             List<string> stringoutboundflights = new List<string>();
             List<string> stringinboundflights = new List<string>();
+            List<string> stringfilteredflights = new List<string>();
 
             foreach(FlightModel flight in filteredflights)
             {
@@ -69,6 +70,11 @@ public class FlightOverviewCreator
             string header = "Available Flights";
             string optionsHeader = string.Format(spacingformat, "FlightId", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
             
+            foreach(FlightModel flight in filteredflights)
+            {
+                string option = string.Format(spacingformat, flight.FlightId, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
+                stringfilteredflights.Add(option);
+            }
 
             foreach(FlightModel flight in outboundflights)
             {
@@ -85,12 +91,12 @@ public class FlightOverviewCreator
             if (!Returnflightselected)
             {
                 FlightModel chosenflight;
-                string[] arrayoutboundflight = stringoutboundflights.ToArray();
+                string[] arrayfliteredflights = stringfilteredflights.ToArray();
                 Menu menu = new Menu();
-                int chosenflightindex = menu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
-                if (chosenflightindex == arrayoutboundflight.Length) {return;}
-                else {chosenflight = outboundflights[chosenflightindex];}
-                // BookFlight bookflight = new BookFlight(chosenoutboundflight); //????????
+                int chosenflightindex = menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
+                if (chosenflightindex == arrayfliteredflights.Length) {return;}
+                else {chosenflight = filteredflights[chosenflightindex];}
+                BookFlight bookflight = new BookFlight(chosenflight);
             }
 
             else if (Returnflightselected)
@@ -109,7 +115,8 @@ public class FlightOverviewCreator
                 if (choseninboundflightindex == arrayinboundflight.Length) {return;}
                 else {choseninboundflight = inboundflights[choseninboundflightindex];}
 
-                BookFlight bookflight = new BookFlight(chosenoutboundflight);
+                BookFlight bookflightoutbound = new BookFlight(chosenoutboundflight);
+                BookFlight bookflightinbound = new BookFlight(choseninboundflight);
             }
         }
         catch (Exception ex)
