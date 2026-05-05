@@ -63,4 +63,9 @@ public class AccountLogic
         int id = _accountAccess.GetIdByEmail(email);
         return id != 0 ? id : 0;
     }
+
+    public bool ConfirmPassword(string password, string confirmationpassword)
+    {
+        return confirmationpassword == password;
+    }
 }

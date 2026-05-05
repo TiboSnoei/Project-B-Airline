@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 
 public class AccountPresentation
 {
@@ -35,8 +36,11 @@ public class AccountPresentation
 
     public void Register()
     {
+        bool run = true;
+        AccountLogic accountlogic = new AccountLogic();
+
         Console.Clear();
-        Console.WriteLine("=== Register ===\n");
+        Console.WriteLine("=== Register ===");
 
         Console.Write("First name: ");
         string firstName = Console.ReadLine();
@@ -47,30 +51,52 @@ public class AccountPresentation
         Console.Write("Email: ");
         string email = Console.ReadLine();
 
-        Console.Write("Password: ");
-        string password = ReadPassword();
-
         Console.Write("Phone number: ");
         string telNum = Console.ReadLine();
 
-        AccountModel newAccount = new AccountModel
+        while (run)
         {
-            FirstName = firstName,
-            LastName = lastName,
-            Email = email,
-            Password = password,
-            TelNum = telNum
-        };
+            Console.Write("Password: ");
+            string password = ReadPassword();
 
-        bool success = _accountLogic.CreateAccount(newAccount);
+            Console.Write("Confirm Password: ");
+            string confirmationpassword = ReadPassword();
 
-        if (success)
-            Console.WriteLine("\nRegistration successful!");
-            // Ook hier zou een verwijzing naar de menu-clas moeten komen als die is gemaakt.
-        else
-            Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+            bool passwordmatch = accountlogic.ConfirmPassword(password, confirmationpassword);
+            if (!passwordmatch)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Register ===");
+                Console.WriteLine($"First name: {firstName}");
+                Console.WriteLine($"Last name: {lastName}");
+                Console.WriteLine($"Email: {email}");
+                Console.WriteLine($"Phone number: {telNum}");
+                Console.WriteLine("Password doesnt match, please try again.");
+            }
 
-        Console.ReadKey();
+            else if (passwordmatch)
+            {
+                AccountModel newAccount = new AccountModel
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    Password = password,
+                    TelNum = telNum
+                };
+
+                bool success = _accountLogic.CreateAccount(newAccount);
+
+                if (success)
+                    Console.WriteLine("\nRegistration successful!");
+                else
+                    Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+
+                Console.ReadKey();
+
+                run = false;
+            }
+        }
     }
 
 public AccountModel Login()
