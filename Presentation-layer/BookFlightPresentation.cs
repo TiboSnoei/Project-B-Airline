@@ -1,9 +1,12 @@
+// TODO: Validation, laat een error message zien als het niet lukt en laat de console.writeline dan niet zien.
+// TODO: assign seat (Zie BookFlightBusiness.cs)
+
+using System.Diagnostics.Contracts;
+
 public class BookFlight
 {
     public BookFlight(FlightModel chosenflight)
     {
-        // TODO: Console.Clear in menuhandler moet verwijderd worden en moet hier lokaal gebeuren.
-
         string[] options = { "Yes", "No" };
         Menu menu = new Menu();
         string context = $"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
@@ -12,12 +15,10 @@ public class BookFlight
         switch (choice)
         {
             case "Yes":
-                // TODO: Validation, laat een error message zien als het niet lukt en laat de console.writeline dan niet zien.
-                // TODO: assign seat (Zie BookFlightBusiness.cs)
-
+                // moet verplaatst worden naar NA het inloggen/registreren
                 var customerflight = new CustomerFlightModel
                 {
-                    UserID = 1, // TODO: ID halen van ingelogde user
+                    UserID = 1, // dummy data, moet later worden vervangen door de user id van de ingelogde gebruiker: loggedInUser.UserID
                     FlightID = chosenflight.FlightId,
                     Seat = "18B", // dummy data
                     SeatChosen = false, // dummy data
@@ -25,7 +26,6 @@ public class BookFlight
                     OnflightMeal = false, // dummy data
                     ExtraLuggage = false // dummy data
                 };
-
                 // Moet naar de access layer om naar de database gestuurd te worden
                 BookFlightAccess bookFlightAccess = new BookFlightAccess();
                 bookFlightAccess.Write(customerflight);
@@ -42,13 +42,19 @@ public class BookFlight
                     case "Log In":
                         AccountPresentation login = new AccountPresentation();
                         login.Login();
-                        Console.ReadKey();
+
+                        Console.Clear();
+
+                        afterLogin(chosenflight);
                         break;
 
                     case "Create Account":
                         AccountPresentation register = new AccountPresentation();
                         register.Register();
-                        Console.ReadKey();
+
+                        Console.Clear();
+
+                        afterRegister(chosenflight);
                         break;
                 }
                 break;
@@ -60,5 +66,40 @@ public class BookFlight
                 Console.ReadKey();
                 break;
         }
+    }
+
+    public void afterRegister(FlightModel chosenflight)
+    {
+        var customerflight = new CustomerFlightModel
+        {
+            UserID = 1, // dummy data, moet later worden vervangen door de user id van de ingelogde gebruiker: loggedInUser.UserID
+            FlightID = chosenflight.FlightId,
+            Seat = "18B", // dummy data
+            SeatChosen = false, // dummy data
+            ExtraLegroom = false, // dummy data
+            OnflightMeal = false, // dummy data
+            ExtraLuggage = false // dummy data
+        };
+        // Moet naar de access layer om naar de database gestuurd te worden
+        BookFlightAccess bookFlightAccess = new BookFlightAccess();
+        bookFlightAccess.Write(customerflight);
+    }
+
+    public void afterLogin(FlightModel chosenflight)
+    {
+        // moet verplaatst worden naar NA het inloggen/registreren
+        var customerflight = new CustomerFlightModel
+        {
+            UserID = 1, // dummy data, moet later worden vervangen door de user id van de ingelogde gebruiker: loggedInUser.UserID
+            FlightID = chosenflight.FlightId,
+            Seat = "18B", // dummy data
+            SeatChosen = false, // dummy data
+            ExtraLegroom = false, // dummy data
+            OnflightMeal = false, // dummy data
+            ExtraLuggage = false // dummy data
+        };
+        // Moet naar de access layer om naar de database gestuurd te worden
+        BookFlightAccess bookFlightAccess = new BookFlightAccess();
+        bookFlightAccess.Write(customerflight);
     }
 }

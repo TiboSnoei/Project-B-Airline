@@ -34,9 +34,9 @@ public class BookFlightAccess
 
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
-                Console.WriteLine("Booking saved to database.");
+                Console.WriteLine("Booking saved to database. Please check your account for details.");
             else
-                Console.WriteLine("Failed to save booking to database.");
+                Console.WriteLine("Failed to save booking to database. Please try again!");
         }
         catch (Exception ex)
         {
