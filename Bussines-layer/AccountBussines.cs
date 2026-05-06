@@ -45,22 +45,41 @@ public class AccountLogic
 
     public bool IsValidEmail(string email)
     {
-        return email.Contains("@") && email.Contains(".");
+        bool check = email.Contains("@") && email.Contains(".");
+        if(!check)
+        {
+            Console.WriteLine("Not a valid Email.");
+        }
+        return check;
     }
 
     public bool CheckValidPassword(string password)
     {
-        return password.Length >= 6;
+        bool check = password.Length >= 6;
+        if(!check)
+        {
+            Console.WriteLine("Password must be 6 or more characters long.");
+        }
+        return check;
     }
 
     public bool CheckName(string name)
     {
-        return !string.IsNullOrWhiteSpace(name) && name.Length > 1;
+        bool check = !string.IsNullOrWhiteSpace(name) && name.Length > 1;
+        if(!check)
+        {
+            Console.WriteLine("Name can't be empty.");
+        }
+        return check;
     }
 
     public int GetIdByEmail(string email)
     {
         int id = _accountAccess.GetIdByEmail(email);
+        if(id != 0)
+        {
+            Console.WriteLine("An account with this email already excists.");
+        }
         return id != 0 ? id : 0;
     }
 

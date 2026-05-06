@@ -1,9 +1,11 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
 public class AccountPresentation
 {
     private AccountLogic _accountLogic = new AccountLogic();
+    private AccountAccess _accountacces = new AccountAccess();
 
     private static string ReadPassword()
     {
@@ -34,7 +36,7 @@ public class AccountPresentation
         return password;
     }
 
-    public void Register()
+    public AccountModel Register()
     {
         bool run = true;
         AccountLogic accountlogic = new AccountLogic();
@@ -54,10 +56,12 @@ public class AccountPresentation
         Console.Write("Phone number: ");
         string telNum = Console.ReadLine();
 
+        string password = "";
+        bool success = false;
         while (run)
         {
             Console.Write("Password: ");
-            string password = ReadPassword();
+            password = ReadPassword();
 
             Console.Write("Confirm Password: ");
             string confirmationpassword = ReadPassword();
@@ -85,18 +89,33 @@ public class AccountPresentation
                     TelNum = telNum
                 };
 
-                bool success = _accountLogic.CreateAccount(newAccount);
+                success = _accountLogic.CreateAccount(newAccount);
 
+                Console.Clear();
                 if (success)
+                {
                     Console.WriteLine("\nRegistration successful!");
-                else
-                    Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+                }
 
-                Console.ReadKey();
+                else
+                {
+                    Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+                }
 
                 run = false;
             }
         }
+
+        if (success)
+        {
+            AccountModel account = _accountLogic.CheckLogin(email, password);
+            Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
+            Console.WriteLine($"Press 'Enter' to continue.");
+            Console.ReadKey();
+            return account;
+        }
+
+        return null;
     }
 
 public AccountModel Login()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Security.Cryptography.X509Certificates; //useless?
 
 class Program
@@ -46,7 +47,7 @@ class Program
                     break;
 
                 case "Login":
-                        loggedInUser = presentation.Login();
+                    loggedInUser = presentation.Login();
                     if (loggedInUser != null)
                     {                                
                         Console.WriteLine($"{loggedInUser.UserType}");
@@ -59,7 +60,7 @@ class Program
                     break;
 
                 case "Register":
-                    presentation.Register();
+                    loggedInUser = presentation.Register();
                     break;
 
                 case "My Flights":
