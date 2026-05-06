@@ -15,21 +15,6 @@ public class BookFlight
         switch (choice)
         {
             case "Yes":
-                // moet verplaatst worden naar NA het inloggen/registreren
-                var customerflight = new CustomerFlightModel
-                {
-                    UserID = 1, // dummy data, moet later worden vervangen door de user id van de ingelogde gebruiker: loggedInUser.UserID
-                    FlightID = chosenflight.FlightId,
-                    Seat = "18B", // dummy data
-                    SeatChosen = false, // dummy data
-                    ExtraLegroom = false, // dummy data
-                    OnflightMeal = false, // dummy data
-                    ExtraLuggage = false // dummy data
-                };
-                // Moet naar de access layer om naar de database gestuurd te worden
-                BookFlightAccess bookFlightAccess = new BookFlightAccess();
-                bookFlightAccess.Write(customerflight);
-
                 Console.Clear();
 
                 string[] options2 = { "Log In", "Create Account" };
