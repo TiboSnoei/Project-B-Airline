@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 public class AccountPresentation
 {
@@ -35,8 +37,11 @@ public class AccountPresentation
 
     public void Register()
     {
+        bool run = true;
+        AccountLogic accountlogic = new AccountLogic();
+
         Console.Clear();
-        Console.WriteLine("=== Register ===\n");
+        Console.WriteLine("=== Register ===");
 
         Console.Write("First name: ");
         string firstName = Console.ReadLine();
@@ -47,58 +52,94 @@ public class AccountPresentation
         Console.Write("Email: ");
         string email = Console.ReadLine();
 
-        Console.Write("Password: ");
-        string password = ReadPassword();
-
         Console.Write("Phone number: ");
         string telNum = Console.ReadLine();
 
-        AccountModel newAccount = new AccountModel
+        string password = "";
+        bool success = false;
+        while (run)
         {
-            FirstName = firstName,
-            LastName = lastName,
-            Email = email,
-            Password = password,
-            TelNum = telNum
-        };
+            Console.Write("Password: ");
+            password = ReadPassword();
 
-        bool success = _accountLogic.CreateAccount(newAccount);
+            Console.Write("Confirm Password: ");
+            string confirmationpassword = ReadPassword();
+
+            bool passwordmatch = accountlogic.ConfirmPassword(password, confirmationpassword);
+            if (!passwordmatch)
+            {
+                Console.Clear();
+                Console.WriteLine("=== Register ===");
+                Console.WriteLine($"First name: {firstName}");
+                Console.WriteLine($"Last name: {lastName}");
+                Console.WriteLine($"Email: {email}");
+                Console.WriteLine($"Phone number: {telNum}");
+                Console.WriteLine("Password doesnt match, please try again.");
+            }
+
+            else if (passwordmatch)
+            {
+                AccountModel newAccount = new AccountModel
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    Password = password,
+                    TelNum = telNum
+                };
+
+                success = _accountLogic.CreateAccount(newAccount);
+
+                Console.Clear();
+                if (success)
+                {
+                    Console.WriteLine("\nRegistration successful!");
+                }
+
+                else
+                {
+                    Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+                }
+
+                run = false;
+            }
+        }
 
         if (success)
-            Console.WriteLine("\nRegistration successful!");
-            // Ook hier zou een verwijzing naar de menu-clas moeten komen als die is gemaakt.
+        {
+            AccountModel account = _accountLogic.CheckLogin(email, password);
+            Session.SetUser(account);
+            Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
+            Console.WriteLine($"Press 'Enter' to continue.");
+            Console.ReadKey();
+        }
+    }
+
+    public void Login()
+    {
+        Console.Clear();
+        Console.WriteLine("=== Login ===\n");
+
+        Console.Write("Email: ");
+        string email = Console.ReadLine();
+
+        Console.Write("Password: ");
+        string password = ReadPassword();
+
+        AccountModel account = _accountLogic.CheckLogin(email, password);
+
+        if (account != null)
+        {
+            Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
+            Console.ReadKey(); // won't be seen by user if line is removed
+            Session.SetUser(account);
+        }
         else
-            Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+        {
+            // TODO: add reason why invalid and requery 
+            Console.WriteLine("\nInvalid email or password.");
+        }
 
         Console.ReadKey();
     }
-
-public AccountModel Login()
-{
-    Console.Clear();
-    Console.WriteLine("=== Login ===\n");
-
-    Console.Write("Email: ");
-    string email = Console.ReadLine();
-
-    Console.Write("Password: ");
-    string password = ReadPassword();
-
-    AccountModel account = _accountLogic.CheckLogin(email, password);
-
-    if (account != null)
-    {
-        Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
-        Console.ReadKey(); // won't be seen by user if line is removed
-        return account; // now valid
-    }
-    else
-    {
-        // TODO: add reason why invalid and requery 
-        Console.WriteLine("\nInvalid email or password.");
-    }
-
-    Console.ReadKey();
-    return null; // return null if login failed
-}
 }
