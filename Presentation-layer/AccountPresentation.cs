@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 public class AccountPresentation
 {
     private AccountLogic _accountLogic = new AccountLogic();
-    private AccountAccess _accountacces = new AccountAccess();
 
     private static string ReadPassword()
     {
@@ -36,7 +35,7 @@ public class AccountPresentation
         return password;
     }
 
-    public AccountModel Register()
+    public void Register()
     {
         bool run = true;
         AccountLogic accountlogic = new AccountLogic();
@@ -109,41 +108,38 @@ public class AccountPresentation
         if (success)
         {
             AccountModel account = _accountLogic.CheckLogin(email, password);
+            Session.SetUser(account);
             Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
             Console.WriteLine($"Press 'Enter' to continue.");
             Console.ReadKey();
-            return account;
+        }
+    }
+
+    public void Login()
+    {
+        Console.Clear();
+        Console.WriteLine("=== Login ===\n");
+
+        Console.Write("Email: ");
+        string email = Console.ReadLine();
+
+        Console.Write("Password: ");
+        string password = ReadPassword();
+
+        AccountModel account = _accountLogic.CheckLogin(email, password);
+
+        if (account != null)
+        {
+            Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
+            Console.ReadKey(); // won't be seen by user if line is removed
+            Session.SetUser(account);
+        }
+        else
+        {
+            // TODO: add reason why invalid and requery 
+            Console.WriteLine("\nInvalid email or password.");
         }
 
-        return null;
+        Console.ReadKey();
     }
-
-public AccountModel Login()
-{
-    Console.Clear();
-    Console.WriteLine("=== Login ===\n");
-
-    Console.Write("Email: ");
-    string email = Console.ReadLine();
-
-    Console.Write("Password: ");
-    string password = ReadPassword();
-
-    AccountModel account = _accountLogic.CheckLogin(email, password);
-
-    if (account != null)
-    {
-        Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
-        Console.ReadKey(); // won't be seen by user if line is removed
-        return account; // now valid
-    }
-    else
-    {
-        // TODO: add reason why invalid and requery 
-        Console.WriteLine("\nInvalid email or password.");
-    }
-
-    Console.ReadKey();
-    return null; // return null if login failed
-}
 }
