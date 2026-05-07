@@ -63,15 +63,11 @@ public static class BookFlight
                     Console.Clear();
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
                     afterLogin(chosenflight);
-                    FlightOverviewSearchPresentation flightOverviewSearchPresentation = new FlightOverviewSearchPresentation();
-                    flightOverviewSearchPresentation.FlightSearchMenu();
                     Console.ReadKey();
                     break;
 
                 case "No":
                     Console.WriteLine("Booking cancelled. Returning to flight overview.");
-                    FlightOverviewSearchPresentation flightOverviewSearchPresentation2 = new FlightOverviewSearchPresentation();
-                    flightOverviewSearchPresentation2.FlightSearchMenu();
                     Console.ReadKey();
                     break;
             }

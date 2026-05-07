@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Security.Cryptography.X509Certificates; //useless?
 
 class Program
@@ -45,7 +46,7 @@ class Program
                     break;
 
                 case "Login":
-                    Session.SetUser(presentation.Login());
+                    presentation.Login();
                     if (Session.LoggedInUser != null)
                     {                                
                         Console.WriteLine($"{Session.LoggedInUser.UserType}");
