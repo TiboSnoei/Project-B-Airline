@@ -85,7 +85,7 @@ public class FlightPresentation
         Menu menu = new Menu();
         List<string> optionsList = new List<string>();
 
-        string formatting = "|{0,-14}|{1,-20}|{2,-20}|{3,-20}|{4,-20}|{5,-5}|{6,-10}|{7,-10}|{8,-10}|{9,-10}|";
+        string formatting = "|{0,-14}|{1,-15}|{2,-15}|{3,-20}|{4,-20}|{5,-5}|{6,-12}|{7,-12}|{8,-15}|{9,-20}|";
         string optionsHeader = string.Format(formatting, "Tail Number", "Origin", "Destination", "Take off", "Touch down", "Price", "Legroom fee", "Meal price", "Chosen seat fee", "Extra luggage fee");
         string header = "All Flights";
 
