@@ -96,7 +96,7 @@ public class FlightOverviewCreator
                 int chosenflightindex = menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
                 if (chosenflightindex == arrayfliteredflights.Length) {return;}
                 else {chosenflight = filteredflights[chosenflightindex];}
-                BookFlight bookflight = new BookFlight(chosenflight);
+                BookFlight.Bookflight(chosenflight);
             }
 
             else if (Returnflightselected)
@@ -115,8 +115,8 @@ public class FlightOverviewCreator
                 if (choseninboundflightindex == arrayinboundflight.Length) {return;}
                 else {choseninboundflight = inboundflights[choseninboundflightindex];}
 
-                BookFlight bookflightoutbound = new BookFlight(chosenoutboundflight);
-                BookFlight bookflightinbound = new BookFlight(choseninboundflight);
+                BookFlight.Bookflight(chosenoutboundflight);
+                BookFlight.Bookflight(choseninboundflight);
             }
         }
         catch (Exception ex)

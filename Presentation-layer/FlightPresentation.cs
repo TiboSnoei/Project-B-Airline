@@ -21,7 +21,6 @@ public class FlightPresentation
         int extraLuggageFee = GetValidInt("Extra luggage fee: ");
 
 
-
         var flight = new FlightModel
         {
             TailNumber = tailNumber,

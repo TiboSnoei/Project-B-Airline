@@ -11,7 +11,6 @@ class Program
         seeder.EnsureDatabase();
 
         AccountPresentation presentation = new AccountPresentation();
-        AccountModel loggedInUser = null;
         Menu menu = new Menu();
 
         bool running = true;
@@ -24,11 +23,11 @@ class Program
             // TODO: refactor to user.mainMenu
             // dit is clunky en kan gewoon in hen eigen class.
             // de enige logica hier zou van een uitgelogde gebruiker moeten zijn imo?
-            if (loggedInUser == null)
+            if (Session.LoggedInUser == null)
             {
                 options = new string[] { "Search Flights", "Login", "Register", "Exit" };
             }
-            else if (loggedInUser.UserType == "Admin")
+            else if (Session.LoggedInUser.UserType == "Admin")
             {
                 options = new string[] { "Flights", "Users", "Booked Flights", "Exit" };
             }
@@ -46,10 +45,10 @@ class Program
                     break;
 
                 case "Login":
-                        loggedInUser = presentation.Login();
-                    if (loggedInUser != null)
+                    Session.SetUser(presentation.Login());
+                    if (Session.LoggedInUser != null)
                     {                                
-                        Console.WriteLine($"{loggedInUser.UserType}");
+                        Console.WriteLine($"{Session.LoggedInUser.UserType}");
                     }
                     else
                     {
