@@ -65,8 +65,8 @@ public class SearchoverviewAcces
                 {
                     FlightId = reader.GetInt32(0),
                     TailNumber = reader.GetString(1),
-                    Origin = reader.GetString(2),
-                    Destination = reader.GetString(3),
+                    Destination = reader.GetString(2),
+                    Origin = reader.GetString(3),
                     TakeOffTime = reader.GetDateTime(4),
                     ArrivalTime = reader.GetDateTime(5),
                     DefaultPrice = reader.GetInt32(6)
