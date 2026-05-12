@@ -1,4 +1,3 @@
-// TODO: Validation, laat een error message zien als het niet lukt en laat de console.writeline dan niet zien.
 // TODO: assign seat (Zie BookFlightBusiness.cs)
 
 public static class BookFlight
@@ -10,7 +9,7 @@ public static class BookFlight
         string context = $"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
         string choice = menu.VerticalMenu(options, "Confirm Booking", context);
 
-        // TODO: checken of de user al ingelogd is, zo ja, skip
+        // Checkt of de user ingelogd is of niet, skipt dit blok als de user al ingelogd is.
         if (Session.LoggedInUser == null)
         {
             switch (choice)
@@ -30,9 +29,8 @@ public static class BookFlight
                             login.Login();
 
                             Console.Clear();
-                            Console.WriteLine("login");
 
-                            afterLogin(chosenflight);
+                            EnterIntoDatabase(chosenflight);
                             break;
 
                         case "Create Account":
@@ -40,9 +38,8 @@ public static class BookFlight
                             register.Register();
 
                             Console.Clear();
-                            Console.WriteLine("register");
 
-                            afterRegister(chosenflight);
+                            EnterIntoDatabase(chosenflight);
                             break;
                     }
                     break;
@@ -55,6 +52,7 @@ public static class BookFlight
                     break;
             }
         }
+        // Als de user al ingelogd is word dit blok uitgevoerd.
         else
         {
             switch (choice)
@@ -62,7 +60,7 @@ public static class BookFlight
                 case "Yes":
                     Console.Clear();
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
-                    afterLogin(chosenflight);
+                    EnterIntoDatabase(chosenflight);
                     Console.ReadKey();
                     break;
 
@@ -74,7 +72,8 @@ public static class BookFlight
         }
     }
 
-    public static void afterRegister(FlightModel chosenflight)
+// EnterIntoDatabase maakt een nieuw CustomerFlightModel aan om de gegevens op te slaan en schrijft ze met de Write() method naar de database.
+    public static void EnterIntoDatabase(FlightModel chosenflight)
     {
         try
         {            
@@ -97,22 +96,5 @@ public static class BookFlight
             Console.WriteLine(Exception.Message);
             throw;
         }
-    }
-
-    public static void afterLogin(FlightModel chosenflight)
-    {
-        var customerflight = new CustomerFlightModel
-        {
-            UserID = Session.LoggedInUser.UserID,
-            FlightID = chosenflight.FlightId,
-            Seat = "18B", // dummy data
-            SeatChosen = false, // dummy data
-            ExtraLegroom = false, // dummy data
-            OnflightMeal = false, // dummy data
-            ExtraLuggage = false // dummy data
-        };
-
-        BookFlightAccess bookFlightAccess = new BookFlightAccess();
-        bookFlightAccess.Write(customerflight);
     }
 }
