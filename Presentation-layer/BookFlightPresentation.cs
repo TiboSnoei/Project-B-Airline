@@ -1,4 +1,4 @@
-// TODO: assign seat (Zie BookFlightBusiness.cs)
+// TODO: assign seat: Moet gebeuren wanneer er een map gemaakt is van de vliegtuigen.
 
 public static class BookFlight
 {
@@ -10,6 +10,8 @@ public static class BookFlight
         string choice = menu.VerticalMenu(options, "Confirm Booking", context);
 
         // Checkt of de user ingelogd is of niet, skipt dit blok als de user al ingelogd is.
+        // Als de niet ingelogde user inlogt of een account maakt word daarna de boeking in de database gezet.
+        // Als de user ervoor kiest om de boeking te annuleren word deze terug gestuurd naar de flight overview.
         if (Session.LoggedInUser == null)
         {
             switch (choice)
@@ -30,7 +32,7 @@ public static class BookFlight
 
                             Console.Clear();
 
-                            EnterIntoDatabase(chosenflight);
+                            BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
 
                         case "Create Account":
@@ -39,7 +41,7 @@ public static class BookFlight
 
                             Console.Clear();
 
-                            EnterIntoDatabase(chosenflight);
+                            BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
                     }
                     break;
@@ -53,6 +55,7 @@ public static class BookFlight
             }
         }
         // Als de user al ingelogd is word dit blok uitgevoerd.
+        // De user krijgt de optie om de boeking te bevestigen of annuleren en word daarna terug gestuurd naar de flight overview.
         else
         {
             switch (choice)
@@ -60,7 +63,7 @@ public static class BookFlight
                 case "Yes":
                     Console.Clear();
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
-                    EnterIntoDatabase(chosenflight);
+                    BookFlightAccess.EnterIntoDatabase(chosenflight);
                     Console.ReadKey();
                     break;
 
@@ -69,32 +72,6 @@ public static class BookFlight
                     Console.ReadKey();
                     break;
             }
-        }
-    }
-
-// EnterIntoDatabase maakt een nieuw CustomerFlightModel aan om de gegevens op te slaan en schrijft ze met de Write() method naar de database.
-    public static void EnterIntoDatabase(FlightModel chosenflight)
-    {
-        try
-        {            
-            var customerflight = new CustomerFlightModel
-            {
-                UserID = Session.LoggedInUser.UserID,
-                FlightID = chosenflight.FlightId,
-                Seat = "18B", // dummy data
-                SeatChosen = false, // dummy data
-                ExtraLegroom = false, // dummy data
-                OnflightMeal = false, // dummy data
-                ExtraLuggage = false // dummy data
-            };
-
-            BookFlightAccess bookFlightAccess = new BookFlightAccess();
-            bookFlightAccess.Write(customerflight);
-        }
-        catch (Exception Exception)
-        {
-            Console.WriteLine(Exception.Message);
-            throw;
         }
     }
 }
