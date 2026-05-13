@@ -1,5 +1,4 @@
-// TODO: Validation, laat een error message zien als het niet lukt en laat de console.writeline dan niet zien.
-// TODO: assign seat (Zie BookFlightBusiness.cs)
+// TODO: assign seat: Moet gebeuren wanneer er een map gemaakt is van de vliegtuigen.
 
 public static class BookFlight
 {
@@ -10,7 +9,9 @@ public static class BookFlight
         string context = $"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
         string choice = menu.VerticalMenu(options, "Confirm Booking", context);
 
-        // TODO: checken of de user al ingelogd is, zo ja, skip
+        // Checkt of de user ingelogd is of niet, skipt dit blok als de user al ingelogd is.
+        // Als de niet ingelogde user inlogt of een account maakt word daarna de boeking in de database gezet.
+        // Als de user ervoor kiest om de boeking te annuleren word deze terug gestuurd naar de flight overview.
         if (Session.LoggedInUser == null)
         {
             switch (choice)
@@ -30,9 +31,8 @@ public static class BookFlight
                             login.Login();
 
                             Console.Clear();
-                            Console.WriteLine("login");
 
-                            afterLogin(chosenflight);
+                            BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
 
                         case "Create Account":
@@ -40,9 +40,8 @@ public static class BookFlight
                             register.Register();
 
                             Console.Clear();
-                            Console.WriteLine("register");
 
-                            afterRegister(chosenflight);
+                            BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
                     }
                     break;
@@ -55,6 +54,8 @@ public static class BookFlight
                     break;
             }
         }
+        // Als de user al ingelogd is word dit blok uitgevoerd.
+        // De user krijgt de optie om de boeking te bevestigen of annuleren en word daarna terug gestuurd naar de flight overview.
         else
         {
             switch (choice)
@@ -62,7 +63,7 @@ public static class BookFlight
                 case "Yes":
                     Console.Clear();
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
-                    afterLogin(chosenflight);
+                    BookFlightAccess.EnterIntoDatabase(chosenflight);
                     Console.ReadKey();
                     break;
 
@@ -72,47 +73,5 @@ public static class BookFlight
                     break;
             }
         }
-    }
-
-    public static void afterRegister(FlightModel chosenflight)
-    {
-        try
-        {            
-            var customerflight = new CustomerFlightModel
-            {
-                UserID = Session.LoggedInUser.UserID,
-                FlightID = chosenflight.FlightId,
-                Seat = "18B", // dummy data
-                SeatChosen = false, // dummy data
-                ExtraLegroom = false, // dummy data
-                OnflightMeal = false, // dummy data
-                ExtraLuggage = false // dummy data
-            };
-
-            BookFlightAccess bookFlightAccess = new BookFlightAccess();
-            bookFlightAccess.Write(customerflight);
-        }
-        catch (Exception Exception)
-        {
-            Console.WriteLine(Exception.Message);
-            throw;
-        }
-    }
-
-    public static void afterLogin(FlightModel chosenflight)
-    {
-        var customerflight = new CustomerFlightModel
-        {
-            UserID = Session.LoggedInUser.UserID,
-            FlightID = chosenflight.FlightId,
-            Seat = "18B", // dummy data
-            SeatChosen = false, // dummy data
-            ExtraLegroom = false, // dummy data
-            OnflightMeal = false, // dummy data
-            ExtraLuggage = false // dummy data
-        };
-
-        BookFlightAccess bookFlightAccess = new BookFlightAccess();
-        bookFlightAccess.Write(customerflight);
     }
 }

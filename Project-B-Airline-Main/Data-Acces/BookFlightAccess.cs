@@ -10,6 +10,8 @@ public class BookFlightAccess
         _connectionString = $"Data Source={dbPath}";
     }
 
+    // Slaat een nieuwe customerflight op in de database.
+    // De method word aangeroepen in de presentation layer nadat een user een boeking heeft bevestigd.
     public void Write(CustomerFlightModel customerFlight)
     {
         try
@@ -41,6 +43,33 @@ public class BookFlightAccess
         catch (Exception ex)
         {
             Console.WriteLine($"Error writing booking to database: {ex.Message}");
+        }
+    }
+
+// Deze method word aangeroepen in de presentation layer nadat een user een boeking heeft bevestigd.
+// De method maakt een customerflightmodel aan en roept daarna de write method aan om deze in de database op te slaan.
+public static void EnterIntoDatabase(FlightModel chosenflight)
+    {
+        try
+        {            
+            var customerflight = new CustomerFlightModel
+            {
+                UserID = Session.LoggedInUser.UserID,
+                FlightID = chosenflight.FlightId,
+                Seat = "18B", // dummy data
+                SeatChosen = false, // dummy data
+                ExtraLegroom = false, // dummy data
+                OnflightMeal = false, // dummy data
+                ExtraLuggage = false // dummy data
+            };
+
+            BookFlightAccess bookFlightAccess = new BookFlightAccess();
+            bookFlightAccess.Write(customerflight);
+        }
+        catch (Exception Exception)
+        {
+            Console.WriteLine(Exception.Message);
+            throw;
         }
     }
 }
