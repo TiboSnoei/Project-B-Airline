@@ -62,6 +62,7 @@ public class DatabaseSeeder
             @"CREATE TABLE Flight (
                 FlightID INTEGER PRIMARY KEY AUTOINCREMENT,
                 TailNumber VARCHAR(100) NOT NULL,
+                FlightNumber VARCHAR(100) NOT NULL,
                 Destination VARCHAR(100) NOT NULL,
                 Origin VARCHAR(100) NOT NULL,
                 ArrivalTime DATETIME NOT NULL,
@@ -117,17 +118,17 @@ public class DatabaseSeeder
             $"('Customer', 'Bob', 'Marten', '{hashedBobPassword}', 'BobMarten@gmail.com', '2026-05-01 00:00:00', '0676543566', 0)," +
             $"('Admin', 'Ad', 'Min', '{hashedAdminPassword}', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0);",
 
-            "INSERT INTO Flight (TailNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee) VALUES " +
-            "('HR101', 'Rotterdam', 'Berlin', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
-            "('HR101', 'Rotterdam', 'Berlin', '2025-05-01 11:45:00', '2026-05-01 13:15:00', 100, 100, 100, 100, 100)," +
-            "('HR102', 'Rotterdam', 'Berlin', '2026-05-01 10:45:00', '2026-05-01 12:15:00', 100, 100, 100, 100, 100)," +
-            "('HR102', 'Rotterdam', 'Berlin', '2026-05-01 09:45:00', '2026-05-01 11:15:00', 100, 100, 100, 100, 100)," +
-            "('HR102', 'Rotterdam', 'Berlin', '2026-05-01 08:45:00', '2026-05-01 10:15:00', 100, 100, 100, 100, 100)," +
-            "('HR103', 'Berlin', 'Rotterdam', '2026-06-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
-            "('HR103', 'Berlin', 'Rotterdam', '2026-06-01 11:45:00', '2026-05-01 13:15:00', 100, 100, 100, 100, 100)," +
-            "('HR103', 'Berlin', 'Rotterdam', '2026-06-01 10:45:00', '2026-05-01 12:15:00', 100, 100, 100, 100, 100)," +
-            "('HR104', 'Berlin', 'Rotterdam', '2026-06-01 09:45:00', '2026-05-01 11:15:00', 100, 100, 100, 100, 100)," +
-            "('HR104', 'Rotterdam', 'Madrid', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100);",
+            "INSERT INTO Flight (TailNumber, FlightNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee) VALUES " +
+            "('HR101', 'RO 1122', 'Rotterdam', 'Berlin', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
+            "('HR101', 'RO 1122', 'Rotterdam', 'Berlin', '2025-05-01 11:45:00', '2026-05-01 13:15:00', 100, 100, 100, 100, 100)," +
+            "('HR102', 'RO 1122', 'Rotterdam', 'Berlin', '2026-05-01 10:45:00', '2026-05-01 12:15:00', 100, 100, 100, 100, 100)," +
+            "('HR102', 'RO 1122', 'Rotterdam', 'Berlin', '2026-05-01 09:45:00', '2026-05-01 11:15:00', 100, 100, 100, 100, 100)," +
+            "('HR102', 'RO 1122', 'Rotterdam', 'Berlin', '2026-05-01 08:45:00', '2026-05-01 10:15:00', 100, 100, 100, 100, 100)," +
+            "('HR103', 'RO 1122', 'Berlin', 'Rotterdam', '2026-06-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
+            "('HR103', 'RO 1122', 'Berlin', 'Rotterdam', '2026-06-01 11:45:00', '2026-05-01 13:15:00', 100, 100, 100, 100, 100)," +
+            "('HR103', 'RO 1122', 'Berlin', 'Rotterdam', '2026-06-01 10:45:00', '2026-05-01 12:15:00', 100, 100, 100, 100, 100)," +
+            "('HR104', 'RO 1122', 'Berlin', 'Rotterdam', '2026-06-01 09:45:00', '2026-05-01 11:15:00', 100, 100, 100, 100, 100)," +
+            "('HR104', 'RO 1122', 'Rotterdam', 'Madrid', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100);",
 
             "INSERT INTO CustomerFlight (UserID, FlightID, Seat, SeatChosen, ExtraLegroom, OnflightMeal, ExtraLuggage) VALUES " +
             "(1, 1, '12C', 0, 0, 0, 0);"

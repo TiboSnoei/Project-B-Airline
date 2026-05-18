@@ -23,11 +23,11 @@ public class FlightAccess
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
             INSERT INTO Flight 
-            (TailNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee)
+            (TailNumber, FlightNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee)
             VALUES 
-            ($TailNumber, $Origin, $Destination, $DepartureTime, $ArrivalTime, $LegroomFee, $DefaultPrice, $MealFee, $ChosenSeatFee, $ExtraLuggageFee)";
-
+            ($TailNumber, $FlightNumber, $Origin, $Destination, $DepartureTime, $ArrivalTime, $LegroomFee, $DefaultPrice, $MealFee, $ChosenSeatFee, $ExtraLuggageFee)";
             cmd.Parameters.AddWithValue("$TailNumber", flight.TailNumber);
+            cmd.Parameters.AddWithValue("$FlightNumber", flight.FlightNumber);
             cmd.Parameters.AddWithValue("$Origin", flight.Origin);
             cmd.Parameters.AddWithValue("$Destination", flight.Destination);
             cmd.Parameters.AddWithValue("$DepartureTime", flight.TakeOffTime);
@@ -102,7 +102,7 @@ public class FlightAccess
 
         using var cmd = conn.CreateCommand();
         cmd.CommandText = @"SELECT 
-            FlightId, TailNumber, Origin, Destination, 
+            FlightId, TailNumber, FlightNumber, Origin, Destination, 
             Departuretime, ArrivalTime, 
             LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee 
         FROM Flight";
@@ -114,15 +114,16 @@ public class FlightAccess
             {
                 FlightId = reader.GetInt32(0),
                 TailNumber = reader.GetString(1),
-                Origin = reader.GetString(2),
-                Destination = reader.GetString(3),
-                TakeOffTime = reader.GetDateTime(4),
-                ArrivalTime = reader.GetDateTime(5),
-                LegroomFee = reader.GetInt32(6),
-                DefaultPrice = reader.GetInt32(7),
-                MealPrice = reader.GetInt32(8),
-                ChosenSeatFee = reader.GetInt32(9),
-                ExtraLuggageFee = reader.GetInt32(10)
+                FlightNumber = reader.GetString(2),
+                Origin = reader.GetString(3),
+                Destination = reader.GetString(4),
+                TakeOffTime = reader.GetDateTime(5),
+                ArrivalTime = reader.GetDateTime(6),
+                LegroomFee = reader.GetInt32(7),
+                DefaultPrice = reader.GetInt32(8),
+                MealPrice = reader.GetInt32(9),
+                ChosenSeatFee = reader.GetInt32(10),
+                ExtraLuggageFee = reader.GetInt32(11)
             });
         }
 

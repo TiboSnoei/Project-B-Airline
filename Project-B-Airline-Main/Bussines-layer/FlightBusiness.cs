@@ -4,6 +4,8 @@ public class FlightLogic
 {
     private readonly FlightAccess _flightAccess = new FlightAccess();
 
+    // Creates a new flight after validating input fields
+    // returns true if flight was successfully stored in database
     public bool CreateFlight(FlightModel flight)
     {
         // Validation of arival, take off, destination, origin and plane ID
@@ -27,7 +29,7 @@ public class FlightLogic
 
         if (string.IsNullOrWhiteSpace(flight.TailNumber))
         {
-            // TODO: dit moet nog veranderd worden naar een zoekopdracht naar het juiste vliegtuig
+            // TODO: Check if tailnumber is an existing one.
             Console.WriteLine("Invalid tail number.");
             return false;
         }
@@ -37,14 +39,15 @@ public class FlightLogic
         return _flightAccess.Write(flight);
     }
 
+    // Updates an existing flight in the database
     public bool EditFlight(FlightModel flight)
     {
-        // TODO: edit not only fees, but times aswell
+        // TODO: edit not only fees, but times as well
         // TODO: add validation
         return _flightAccess.Update(flight);
-
     }
 
+    // Retrieves all flights from the database
     public List<FlightModel> GetAll()
     {
         return _flightAccess.GetAll();

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Dynamic;
-using System.Security.Cryptography.X509Certificates; //useless?
+using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
     static void Main(string[] args)
     {
-        //For testing purposes, this will check if there is a database. 
+        // For testing purposes, this will check if there is a database. 
         // If there isn't any in the expected location, it will generate and seed one instead.
         var seeder = new DatabaseSeeder();
         seeder.EnsureDatabase();
@@ -20,10 +20,7 @@ class Program
         {
             string[] options;
             string header = "Flight Booking System";
-
-            // TODO: refactor to user.mainMenu
-            // dit is clunky en kan gewoon in hen eigen class.
-            // de enige logica hier zou van een uitgelogde gebruiker moeten zijn imo?
+            
             if (Session.LoggedInUser == null)
             {
                 options = new string[] { "Search Flights", "Login", "Register", "Exit" };

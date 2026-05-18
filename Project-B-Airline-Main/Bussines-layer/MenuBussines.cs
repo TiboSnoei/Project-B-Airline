@@ -1,12 +1,10 @@
+// TODO: make static.
 public class Menu
 {
-    // options = { "option 1", "option 2", "option 3" }; -> an array of all options (as strings) that the users can choose in this menu
-    // description = "description row 1 \n descripton row 2 \n"; -> a string with \n for the end of every row
-    // header = "header" -> The header of this menu
-    // returns: The option that has been selected or "Exit" if the escape key is pressed.
-    // This means that you should always account for an exit!
-    // How do I acces the result?
-    // You shall use a switch statement.
+    // Displays a vertical selection menu where the user can navigate using arrow keys.
+    // options = array of selectable menu options
+    // header = title displayed at the top of the menu
+    // returns selected option or "Exit" if Escape is pressed
     public string VerticalMenu(string[] options, string header)
     {
         bool running = true;
@@ -53,6 +51,11 @@ public class Menu
         return "Exit"; // to prevent build error.
     }
 
+    // Displays a vertical selection menu with a description block above the options.
+    // options = array of selectable menu options
+    // header = title displayed at the top of the menu
+    // description = multi-line description text (use \n for line breaks)
+    // returns selected option or "Exit" if Escape is pressed
     public string VerticalMenu(string[] options, string header, string description)
     {
         bool running = true;
@@ -100,20 +103,11 @@ public class Menu
         return "Exit"; // to prevent build error.
     }
 
-    // see: https://web.archive.org/web/20120803184243/http://www.dylanbeattie.net/cheatsheets/dot_net_string_format_cheat_sheet.pdf
-    // string optionsHeader = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", "Tail Number", "Origin", "Destination", "Date");
-    // string option = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.tailNumber, flight.origin, flight.destination, flight.TakeOffTime);
-    // options = { option, option2, option3 }; -> gebruik gewoon een loopje om aan te maken, houd het netjes en makkelijk!
-    // returns: int -> plaats in array of lengte van de array indien exit
-
-    // voorbeeld om uit te proberen:
-    // string optionsHeader = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", "Tail Number", "Origin", "Destination", "Date");
-    // string option = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime);
-    // string option2 = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime);
-    // string option3 = string.Format("|{0,-10}|{1,-10}|{2,-10}|{3,-10}|", flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime);
-    // string header = "bazinga";
-    // string[] options = { option, option2, option3 };
-    // menu.VerticalMenuWithColumns(options, header, optionsHeader);
+    // Displays a vertical menu with column-formatted options.
+    // options = pre-formatted table rows
+    // header = menu title
+    // optionsHeader = column header row
+    // returns selected index or options.Length if Escape is pressed
     public int VerticalMenuWithColumns(string[] options, string header, string optionsHeader)
     {
         bool running = true;
@@ -159,9 +153,10 @@ public class Menu
                     return options.Length;
             }
         }
-        return options.Length; // to prevent build error.
+        return options.Length;
     }
 
+    // placeholder
     public string PlaneMenu()
     {
         return "Not implemented";

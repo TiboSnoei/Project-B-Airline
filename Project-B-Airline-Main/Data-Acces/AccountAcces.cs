@@ -38,6 +38,7 @@ public class AccountAccess
         command.ExecuteNonQuery();
     }
 
+    // TODO: Only get Password when needed?
     public AccountModel GetByEmail(string email)
     {
         using var connection = new SqliteConnection(_connectionString);
@@ -87,6 +88,7 @@ public class AccountAccess
         return 0;
     }
 
+    // TODO: Why do we need the users password when getting all of them? seems... not so secure
     public List<AccountModel> GetAll()
     {
         var accounts = new List<AccountModel>();

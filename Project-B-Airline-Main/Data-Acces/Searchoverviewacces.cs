@@ -8,8 +8,7 @@ public class SearchoverviewAcces
         _connectionString = $"Data Source={dbPath}";
     }
 
-
-    internal List<FlightModel> SearchFlights(SearchOverviewModel search)
+    public List<FlightModel> SearchFlights(SearchOverviewModel search)
     {
         var outbound = ExecuteFlightSearch(
             destination: search.Destinationselected,
@@ -67,8 +66,8 @@ public class SearchoverviewAcces
                     TailNumber = reader.GetString(1),
                     Destination = reader.GetString(2),
                     Origin = reader.GetString(3),
-                    TakeOffTime = reader.GetDateTime(4),
-                    ArrivalTime = reader.GetDateTime(5),
+                    ArrivalTime = reader.GetDateTime(4),
+                    TakeOffTime = reader.GetDateTime(5),
                     DefaultPrice = reader.GetInt32(6)
                 });
             }
@@ -77,7 +76,7 @@ public class SearchoverviewAcces
         catch (Exception ex)
         {
             Console.WriteLine($"Error searching in flights {ex.Message}");
-            return null!;
+            return new List<FlightModel>();
         }
         return results;
     }
