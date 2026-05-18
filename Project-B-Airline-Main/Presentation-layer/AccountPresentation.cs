@@ -131,7 +131,6 @@ public class AccountPresentation
         if (account != null)
         {
             Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
-            Console.ReadKey(); // won't be seen by user if line is removed
             Session.SetUser(account);
         }
         else
@@ -139,7 +138,7 @@ public class AccountPresentation
             // TODO: add reason why invalid and requery 
             Console.WriteLine("\nInvalid email or password.");
         }
-
+        
         Console.ReadKey();
     }
 }
