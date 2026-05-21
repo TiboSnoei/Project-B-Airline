@@ -12,6 +12,7 @@ class Program
         seeder.EnsureDatabase();
 
         AccountPresentation presentation = new AccountPresentation();
+        UserBookingsListPresentation userBookingsListPresentation = new UserBookingsListPresentation();
         Menu menu = new Menu();
 
         bool running = true;
@@ -60,7 +61,7 @@ class Program
                     break;
 
                 case "My Flights":
-                    Console.WriteLine("Not implemented.");
+                    userBookingsListPresentation.ShowBookingsAsMenu();
                     Console.ReadKey();
                     break;
 
