@@ -10,6 +10,7 @@ public class FlightPresentation
         Console.WriteLine("=== Create Flight ===\n");
 
         string tailNumber = GetValidString("Plane tail number: ");
+        string flightNumber = GetValidString("Flight number: ");
         string destination = GetValidString("Destination: ");
         string origin = GetValidString("Origin: ");
         DateTime takeOff = GetValidDateTime("Takeoff (yyyy-MM-dd HH:mm): ");
@@ -24,6 +25,7 @@ public class FlightPresentation
         var flight = new FlightModel
         {
             TailNumber = tailNumber,
+            FlightNumber = flightNumber,
             Destination = destination,
             Origin = origin,
             TakeOffTime = takeOff,
