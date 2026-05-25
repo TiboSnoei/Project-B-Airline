@@ -10,6 +10,7 @@ public class FlightPresentation
         Console.WriteLine("=== Create Flight ===\n");
 
         string tailNumber = GetValidString("Plane tail number: ");
+        string flightNumber = GetValidString("Flight number: ");
         string destination = GetValidString("Destination: ");
         string origin = GetValidString("Origin: ");
         DateTime takeOff = GetValidDateTime("Takeoff (yyyy-MM-dd HH:mm): ");
@@ -24,6 +25,7 @@ public class FlightPresentation
         var flight = new FlightModel
         {
             TailNumber = tailNumber,
+            FlightNumber = flightNumber,
             Destination = destination,
             Origin = origin,
             TakeOffTime = takeOff,
@@ -84,13 +86,13 @@ public class FlightPresentation
         Menu menu = new Menu();
         List<string> optionsList = new List<string>();
 
-        string formatting = "|{0,-14}|{1,-15}|{2,-15}|{3,-20}|{4,-20}|{5,-5}|{6,-12}|{7,-12}|{8,-15}|{9,-20}|";
-        string optionsHeader = string.Format(formatting, "Tail Number", "Origin", "Destination", "Take off", "Touch down", "Price", "Legroom fee", "Meal price", "Chosen seat fee", "Extra luggage fee");
+        string formatting = "|{0,-14}|{1,-15}|{2,-15}|{3,-15}|{4,-20}|{5,-20}|{6,-5}|{7,-12}|{8,-12}|{9,-15}|{10,-20}|";
+        string optionsHeader = string.Format(formatting, "Tail Number", "Flight Number", "Origin", "Destination", "Take off", "Touch down", "Price", "Legroom fee", "Meal price", "Chosen seat fee", "Extra luggage fee");
         string header = "All Flights";
 
         foreach (var flight in flights)
         {
-            string option = string.Format(formatting, flight.TailNumber, flight.Origin, flight.Destination, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice, flight.LegroomFee, flight.MealPrice, flight.ChosenSeatFee, flight.ExtraLuggageFee);
+            string option = string.Format(formatting, flight.TailNumber, flight.FlightNumber, flight.Origin, flight.Destination, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice, flight.LegroomFee, flight.MealPrice, flight.ChosenSeatFee, flight.ExtraLuggageFee);
             optionsList.Add(option);
         }
 
