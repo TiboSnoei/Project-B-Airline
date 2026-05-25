@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+
 public class UserBookingsListLogic
 {
     AccountModel LoggedInUser = Session.LoggedInUser;
@@ -5,6 +7,16 @@ public class UserBookingsListLogic
     public UserBookingsListLogic(AccountModel loggedInUser)
     {
         LoggedInUser = loggedInUser;
+    }
+
+
+    // gets bookings from the database throught the acces layer
+    // returns the bookings as a list of customerflightmodels
+    public List<CustomerFlightModel> GiveBookingsList()
+    {
+        UserBookingsListAcces userBookingsListAcces = new UserBookingsListAcces(LoggedInUser);
+        List<CustomerFlightModel> Bookings = userBookingsListAcces.SearchBookings();
+        return Bookings;
     }
 
 
@@ -25,12 +37,12 @@ public class UserBookingsListLogic
     // returns an array of bookings as strings
     public string[] ConvertBookingsToArray(List<CustomerFlightModel> bookings) // TODO: convert all bookings from flightmodel to string.
     {
-        string spacingformat = "{0,-10}|{1,-20}|{2,-30}|{3,-40}|{4,-50}|{5,-60}|{6,-70}";
+        string spacingformat = "{0,-10}|{1,-20}|{2,-30}|{3,-40}|{4,-50}|{5,-60}|{6,-70}|{6,-80}";
         List<string> optionslist = new List<string>();
 
         foreach (CustomerFlightModel booking in bookings)
         {
-            string option = string.Format(spacingformat, booking.UserID, booking.FlightID, booking.Seat, booking.SeatChosen, booking.ExtraLegroom, booking.OnflightMeal, booking.ExtraLuggage);
+            string option = string.Format(spacingformat, booking.UserID, booking.FlightID, booking.FlightNumber, booking.Seat, booking.SeatChosen, booking.ExtraLegroom, booking.OnflightMeal, booking.ExtraLuggage);
             optionslist.Add(option);
         }
 

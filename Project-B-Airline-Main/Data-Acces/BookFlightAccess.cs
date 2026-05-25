@@ -28,6 +28,7 @@ public class BookFlightAccess
 
             cmd.Parameters.AddWithValue("$UserID", customerFlight.UserID);
             cmd.Parameters.AddWithValue("$FlightID", customerFlight.FlightID);
+            cmd.Parameters.AddWithValue("$FlightNumber", customerFlight.FlightNumber);
             cmd.Parameters.AddWithValue("$Seat", customerFlight.Seat);
             cmd.Parameters.AddWithValue("$SeatChosen", customerFlight.SeatChosen);
             cmd.Parameters.AddWithValue("$ExtraLegroom", customerFlight.ExtraLegroom);
@@ -56,6 +57,7 @@ public static void EnterIntoDatabase(FlightModel chosenflight)
             {
                 UserID = Session.LoggedInUser.UserID,
                 FlightID = chosenflight.FlightId,
+                FlightNumber = chosenflight.FlightNumber,
                 Seat = "18B", // dummy data
                 SeatChosen = false, // dummy data
                 ExtraLegroom = false, // dummy data
