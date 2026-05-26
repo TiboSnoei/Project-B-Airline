@@ -81,7 +81,6 @@ public class FlightPresentation
         //This shouldnt be used. Tibo should make the indexed and filtered flight list.
         var flights = _flightLogic.GetAll();
 
-        Menu menu = new Menu();
         List<string> optionsList = new List<string>();
 
         string formatting = "|{0,-14}|{1,-15}|{2,-15}|{3,-20}|{4,-20}|{5,-5}|{6,-12}|{7,-12}|{8,-15}|{9,-20}|";
@@ -96,7 +95,7 @@ public class FlightPresentation
 
         string[] options = optionsList.ToArray();
 
-        int index = menu.VerticalMenuWithColumns(options, header, optionsHeader);
+        int index = Menu.VerticalMenuWithColumns(options, header, optionsHeader);
 
         if (index != flights.Count)
         {

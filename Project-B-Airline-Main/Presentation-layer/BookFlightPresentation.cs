@@ -5,9 +5,9 @@ public static class BookFlight
     public static void Bookflight(FlightModel chosenflight)
     {
         string[] options = { "Yes", "No" };
-        Menu menu = new Menu();
+
         string context = $"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
-        string choice = menu.VerticalMenu(options, "Confirm Booking", context);
+        string choice = Menu.VerticalMenu(options, "Confirm Booking", context);
 
         // Checkt of de user ingelogd is of niet, skipt dit blok als de user al ingelogd is.
         // Als de niet ingelogde user inlogt of een account maakt word daarna de boeking in de database gezet.
@@ -20,9 +20,9 @@ public static class BookFlight
                     Console.Clear();
 
                     string[] options2 = { "Log In", "Create Account" };
-                    Menu menu2 = new Menu();
+
                     string context2 = "To complete your booking, you need to have an account. Please choose one of the options below to proceed.\n";
-                    string choice2 = menu2.VerticalMenu(options2, "Do you want to log in or register a new account?", context2);
+                    string choice2 = Menu.VerticalMenu(options2, "Do you want to log in or register a new account?", context2);
 
                     switch (choice2)
                     {

@@ -12,7 +12,6 @@ class Program
         seeder.EnsureDatabase();
 
         AccountPresentation presentation = new AccountPresentation();
-        Menu menu = new Menu();
 
         bool running = true;
 
@@ -34,7 +33,7 @@ class Program
                 options = new string[] { "Search Flights", "My Flights", "My Account", "Exit" };
             }
 
-            switch (menu.VerticalMenu(options, header))
+            switch (Menu.VerticalMenu(options, header))
             {
                 case "Search Flights":
                     FlightOverviewSearchPresentation flightOverviewSearchPresentation = new FlightOverviewSearchPresentation();

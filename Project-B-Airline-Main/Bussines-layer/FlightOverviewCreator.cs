@@ -92,8 +92,8 @@ public class FlightOverviewCreator
             {
                 FlightModel chosenflight;
                 string[] arrayfliteredflights = stringfilteredflights.ToArray();
-                Menu menu = new Menu();
-                int chosenflightindex = menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
+
+                int chosenflightindex = Menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
                 if (chosenflightindex == arrayfliteredflights.Length) {return;}
                 else {chosenflight = filteredflights[chosenflightindex];}
                 BookFlight.Bookflight(chosenflight);
@@ -103,15 +103,15 @@ public class FlightOverviewCreator
             {
                 FlightModel chosenoutboundflight;
                 string[] arrayoutboundflight = stringoutboundflights.ToArray();
-                Menu outboundmenu = new Menu();
-                int chosenoutboundflightindex = outboundmenu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
+
+                int chosenoutboundflightindex = Menu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
                 if (chosenoutboundflightindex == arrayoutboundflight.Length) {return;}
                 else {chosenoutboundflight = outboundflights[chosenoutboundflightindex];}
 
                 FlightModel choseninboundflight;
                 string[] arrayinboundflight = stringinboundflights.ToArray();
-                Menu inboundmenu = new Menu();
-                int choseninboundflightindex = inboundmenu.VerticalMenuWithColumns(arrayinboundflight, header, optionsHeader);
+
+                int choseninboundflightindex = Menu.VerticalMenuWithColumns(arrayinboundflight, header, optionsHeader);
                 if (choseninboundflightindex == arrayinboundflight.Length) {return;}
                 else {choseninboundflight = inboundflights[choseninboundflightindex];}
 

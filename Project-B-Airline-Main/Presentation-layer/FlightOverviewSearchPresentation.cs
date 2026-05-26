@@ -12,8 +12,8 @@ public class FlightOverviewSearchPresentation
         destinationselected = GetValidString("Destination: ");
         departuredate = GetValidDate("Flight Date (yyyy-mm-dd): ");
         string[] options = {"Yes", "No"};
-        Menu menu = new Menu();
-        string returnflightawnser = menu.VerticalMenu(options, "Do you want a return flight");
+
+        string returnflightawnser = Menu.VerticalMenu(options, "Do you want a return flight");
         Console.Clear();
         if (returnflightawnser == "Yes")
         {
