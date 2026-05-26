@@ -39,6 +39,8 @@ public class DatabaseSeeder
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
+
+        // TODO: Table names should be plural! 
         var commands = new List<string>
         {
             @"CREATE TABLE Plane (
@@ -59,6 +61,7 @@ public class DatabaseSeeder
                 LoyaltyPoints INTEGER NOT NULL
             );",
 
+            // TODO: add planeModel, filled with seat id's
             @"CREATE TABLE Flight (
                 FlightID INTEGER PRIMARY KEY AUTOINCREMENT,
                 TailNumber VARCHAR(100) NOT NULL,
@@ -75,12 +78,24 @@ public class DatabaseSeeder
                 FOREIGN KEY (TailNumber) REFERENCES Plane(TailNumber)
             );",
 
+            ///TODO: Seats must not be varchar but a list of booked seats.
             @"CREATE TABLE CustomerFlight (
                 ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 UserID INTEGER NOT NULL,
                 FlightID INTEGER NOT NULL,
-                Seat VARCHAR(100) NOT NULL,
+                Seats VARCHAR(100) NOT NULL,
                 SeatChosen BOOLEAN NOT NULL,
+                FOREIGN KEY(UserID) REFERENCES Users(UserID),
+                FOREIGN KEY(FlightID) REFERENCES Flight(FlightID)
+            );",
+
+            // TODO: add flyer data. ex: name, age, passport number
+            @"CREATE TABLE Seats (
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                UserID INTEGER NOT NULL,
+                FlightID INTEGER NOT NULL,
+                SeatNumber VARCHAR(100) NOT NULL,
+                Class VARCHAR(100) NOT NULL,
                 ExtraLegroom BOOLEAN NOT NULL,
                 OnflightMeal BOOLEAN NOT NULL,
                 ExtraLuggage BOOLEAN NOT NULL,
