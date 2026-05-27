@@ -1,22 +1,19 @@
 public class UserBookingsListPresentation
 {
-    AccountModel LoggedInUser = Session.LoggedInUser;
-    // constructor
-    public void userbookingslist(AccountModel loggedInUser)
-    {
-        LoggedInUser = loggedInUser;
-    }
-
-    public void ShowBookingsAsMenu() // TODO: user menu class to creato a menu with all bookings in it.
+    public void ShowBookingsAsMenu()
     {
         Menu menu = new Menu();
+        AccountModel LoggedInUser = Session.LoggedInUser;
+
         UserBookingsListLogic userBookingsListLogic = new UserBookingsListLogic(LoggedInUser);
         List<CustomerFlightModel> BookingsList = userBookingsListLogic.GiveBookingsList();
 
-        string spacingformat = "{0,-10}|{1,-20}|{2,-30}|{3,-40}|{4,-50}|{5,-60}|{6,-70}|{6,-80}";
+        string spacingformat = "{0,-25}|{1,-25}|{2,-25}|{3,-25}|{4,-25}|{5,-25}|{6,-25}|{7,-25}";
         string header = "Your Bookings";
-        string optionsheader = string.Format(spacingformat, "UserID", "FlightID", "FlightNumber", "Seat", "SeatChosen", "ExtraLegroom", "OnflightMeal", "ExtraLuggage");
+        string optionsheader = string.Format(spacingformat, "FlightNumber", "Tailnumber", "Seat", "TakeOffTime", "ArrivalTime", "Price", "Destination", "Departure");
         string[] optionsarray = userBookingsListLogic.GetBookings();
+
+        // Console.WriteLine(optionsarray);
         
         int chosenbookingindex = menu.VerticalMenuWithColumns(optionsarray, header, optionsheader);
         if (chosenbookingindex == optionsarray.Length)
@@ -27,7 +24,7 @@ public class UserBookingsListPresentation
         else
         {
             CustomerFlightModel selectedbooking = BookingsList[chosenbookingindex];
-            Console.WriteLine("Viewing and upgrading bookings not implomented yet"); // the menu to view and upgrade your booking as a customer is not implomented yet
+            Console.WriteLine("Viewing and upgrading bookings not implomented yet"); // TODO: the menu to view and upgrade your booking as a customer is not implomented yet. impoment it.
         }
     }
 }

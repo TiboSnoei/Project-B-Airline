@@ -69,4 +69,9 @@ public class FlightLogic
     {
         return _flightAccess.GetAll();
     }
+
+    public FlightModel GetFlightByID(int FlightID)
+    {
+        return _flightAccess.GetFlightByID(FlightID);
+    }
 }

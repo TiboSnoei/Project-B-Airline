@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
+using System.IO;
 public class UserBookingsListAcces
 {
     AccountModel LoggedInUser = Session.LoggedInUser;
@@ -38,12 +41,11 @@ public class UserBookingsListAcces
                 {
                     UserID = reader.GetInt32(0),
                     FlightID = reader.GetInt32(1),
-                    FlightNumber = reader.GetString(2),
-                    Seat = reader.GetString(3), // needs to be cahnged to array at some point.
-                    SeatChosen = reader.GetBoolean(4), // need to be removed at some point
-                    ExtraLegroom = reader.GetBoolean(5), // need to be removed at some point
-                    OnflightMeal = reader.GetBoolean(6), // need to be removed at some point
-                    ExtraLuggage = reader.GetBoolean(7) // need to be removed at some point
+                    Seat = reader.GetString(2), // TOTO: needs to be cahnged to array at some point.
+                    SeatChosen = reader.GetBoolean(3), // need to be removed at some point
+                    ExtraLegroom = reader.GetBoolean(4), // need to be removed at some point
+                    OnflightMeal = reader.GetBoolean(5), // need to be removed at some point
+                    ExtraLuggage = reader.GetBoolean(6) // need to be removed at some point
                 });
             }
             return results;

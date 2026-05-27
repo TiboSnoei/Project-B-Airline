@@ -35,14 +35,29 @@ public class UserBookingsListLogic
     // first converts the bookings into strings and adds them to a list
     // then converts the list into an array
     // returns an array of bookings as strings
-    public string[] ConvertBookingsToArray(List<CustomerFlightModel> bookings) // TODO: convert all bookings from flightmodel to string.
+    public string[] ConvertBookingsToArray(List<CustomerFlightModel> bookings)
     {
-        string spacingformat = "{0,-10}|{1,-20}|{2,-30}|{3,-40}|{4,-50}|{5,-60}|{6,-70}|{6,-80}";
+        FlightLogic flightlogic = new ();
+        string spacingformat = "{0,-25}|{1,-25}|{2,-25}|{3,-25}|{4,-25}|{5,-25}|{6,-25}|{7,-25}";
         List<string> optionslist = new List<string>();
 
         foreach (CustomerFlightModel booking in bookings)
         {
-            string option = string.Format(spacingformat, booking.UserID, booking.FlightID, booking.FlightNumber, booking.Seat, booking.SeatChosen, booking.ExtraLegroom, booking.OnflightMeal, booking.ExtraLuggage);
+            FlightModel _Flight = flightlogic.GetFlightByID(booking.FlightID);
+            if (_Flight is null)
+            {
+                continue;
+            }
+
+            var _FlightNumber = _Flight.FlightNumber;
+            var _TailNumber = _Flight.TailNumber;
+            var _TakeOffTime = _Flight.TakeOffTime;
+            var _ArrivalTime = _Flight.ArrivalTime;
+            var _Price = _Flight.DefaultPrice; // TODO: Price needs to be chanced when upgrades/extras are booked or loyalty bonuses are givven.
+            var _Destination = _Flight.Destination;
+            var _Origin = _Flight.Origin;
+
+            string option = string.Format(spacingformat, _FlightNumber, _TailNumber, booking.Seat, _TakeOffTime, _ArrivalTime, _Price, _Destination, _Origin);
             optionslist.Add(option);
         }
 
