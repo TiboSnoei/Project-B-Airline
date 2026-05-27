@@ -66,25 +66,25 @@ public class FlightOverviewCreator
                 if (flight.Destination == "Rotterdam") {inboundflights.Add(flight);}
             }
 
-            string spacingformat = "{0,-12}|{1,-15}|{2,-20}|{3,-20}|{4,-25}|{5,-25}|{6,-23}|{7,-10}";
+            string spacingformat = "{0,-15}|{1,-20}|{2,-20}|{3,-25}|{4,-25}|{5,-23}|{6,-10}";
             string header = "Available Flights";
-            string optionsHeader = string.Format(spacingformat, "FlightId", "FlightNumber", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
+            string optionsHeader = string.Format(spacingformat, "FlightNumber", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
             
             foreach(FlightModel flight in filteredflights)
             {
-                string option = string.Format(spacingformat, flight.FlightId, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
+                string option = string.Format(spacingformat,  flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
                 stringfilteredflights.Add(option);
             }
 
             foreach(FlightModel flight in outboundflights)
             {
-                string option = string.Format(spacingformat, flight.FlightId, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
+                string option = string.Format(spacingformat, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
                 stringoutboundflights.Add(option);
             }
 
             foreach(FlightModel flight in inboundflights)
             {
-                string option = string.Format(spacingformat, flight.FlightId, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
+                string option = string.Format(spacingformat, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
                 stringinboundflights.Add(option);
             }
 

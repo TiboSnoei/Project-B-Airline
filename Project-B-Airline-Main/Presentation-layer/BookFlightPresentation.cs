@@ -6,7 +6,7 @@ public static class BookFlight
     {
         string[] options = { "Yes", "No" };
         Menu menu = new Menu();
-        string context = $"You have selected flight {chosenflight.FlightId} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
+        string context = $"You have selected flight {chosenflight.FlightNumber} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
         string choice = menu.VerticalMenu(options, "Confirm Booking", context);
 
         // Checkt of de user ingelogd is of niet, skipt dit blok als de user al ingelogd is.
