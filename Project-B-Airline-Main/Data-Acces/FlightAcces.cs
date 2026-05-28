@@ -129,4 +129,36 @@ public class FlightAccess
 
         return flights;
     }
+
+    public FlightModel GetFlightById(int FlightId)
+    {
+        using var conn = new SqliteConnection(_connectionString);
+        conn.Open();
+
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"SELECT 
+            FlightID, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, DefaultPrice 
+            FROM Flight 
+            WHERE FlightId = @FlightId";
+
+        cmd.Parameters.AddWithValue("@FlightId", FlightId);
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return new FlightModel
+            {
+                FlightId = reader.GetInt32(0),
+                TailNumber = reader.GetString(1),
+                Destination = reader.GetString(2),
+                Origin = reader.GetString(3),
+                ArrivalTime = reader.GetDateTime(4),
+                TakeOffTime = reader.GetDateTime(5),
+                DefaultPrice = reader.GetInt32(6)
+            };
+        }
+
+        return null;
+    }
 }

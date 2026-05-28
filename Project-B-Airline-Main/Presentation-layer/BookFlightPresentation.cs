@@ -2,7 +2,7 @@
 
 public static class BookFlight
 {
-    public static void Bookflight(FlightModel chosenflight)
+    public static void Bookflight(FlightModel chosenflight, string selectedSeat)
     {
         string[] options = { "Yes", "No" };
 
@@ -32,6 +32,7 @@ public static class BookFlight
 
                             Console.Clear();
 
+                            // TODO: add seat to database
                             BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
 
@@ -41,6 +42,7 @@ public static class BookFlight
 
                             Console.Clear();
 
+                            // TODO: add seat to database
                             BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
                     }
@@ -55,7 +57,7 @@ public static class BookFlight
             }
         }
         // Als de user al ingelogd is word dit blok uitgevoerd.
-        // De user krijgt de optie om de boeking te bevestigen of annuleren en word daarna terug gestuurd naar de flight overview.
+        // De user krijgt de optie om de boeking te bevestigen, of annuleren en word daarna terug gestuurd naar de flight overview.
         else
         {
             switch (choice)
@@ -63,6 +65,7 @@ public static class BookFlight
                 case "Yes":
                     Console.Clear();
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
+                    // TODO: add seat to database
                     BookFlightAccess.EnterIntoDatabase(chosenflight);
                     Console.ReadKey();
                     break;

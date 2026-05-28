@@ -1,7 +1,7 @@
 public class SeatModel
 {
     public int ID { get; set; }
-    public int UserID { get; set; }
+    public int? UserID { get; set; }
     public int FlightID { get; set;}
     public string SeatNumber { get; set; }
     public string Class { get; set; }

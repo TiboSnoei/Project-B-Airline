@@ -169,35 +169,38 @@ static class Menu
 
             // flight.planemodel
             // loop each seat of the plane model
-            // Seat[,] model = { {1, 4, 2}, {3, 6, 8} }; // id's of seats
+            // Seat[,] model = { {1, 4, 2}, {3, 6, 8} };
+            // id's of seats
             // example:
             // null , 1, 2, 3, null 4, 5, 6, null
             // 7, 8, 9, 10, null, 11, 12, 13, 14
-            // so null is no seat here, the numbers are replaced with seat objects. 
+            // so null is no seat here, the numbers are replaced with seat objects.
             // a seat has an Id, Class, ExtraLeggroom, SeatNumber
+
             while (model[columnIndex, rowIndex] == null)
             {
                 rowIndex++;
             }
+
             for (int row = 0; row < model.GetLength(1); row++)
             {
                 Console.Write("| ");
+
                 for (int column = 0; column < model.GetLength(0); column++)
-                {                    
+                {
                     if (column == columnIndex && row == rowIndex)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkCyan;
                         Console.ForegroundColor = ConsoleColor.White;
                     }
 
-                    if (model[column, row] != null) 
+                    if (model[column, row] != null)
                     {
-                        if (model[column,row].UserID == 0)
+                        if (model[column, row].UserID == 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Write($"[XXX] ");
                             Console.ForegroundColor = ConsoleColor.White;
-                            
                         }
                         else if (model[column, row].SeatNumber.Length > 2)
                         {
@@ -210,19 +213,21 @@ static class Menu
                     }
                     else
                     {
-                        Console.Write("      ");
+                        Console.Write(" ");
                     }
 
-                    if (column == columnIndex && row == rowIndex) Console.ResetColor();
+                    if (column == columnIndex && row == rowIndex)
+                        Console.ResetColor();
                 }
+
                 Console.Write("|");
                 Console.WriteLine();
-                
             }
 
             var key = Console.ReadKey(true).Key;
+
             do
-            {                
+            {
                 switch (key)
                 {
                     case ConsoleKey.UpArrow:
@@ -243,6 +248,7 @@ static class Menu
 
                     case ConsoleKey.Enter:
                         string choice = InternalSeatMenu(model[columnIndex, rowIndex]);
+
                         if (choice == "No")
                         {
                             break;
@@ -254,11 +260,11 @@ static class Menu
 
                     case ConsoleKey.Escape:
                         return "Exit";
-                    
                 }
             }
             while (model[columnIndex, rowIndex] == null);
         }
+
         return "Exit";
     }
 
@@ -274,10 +280,12 @@ static class Menu
         {
             Console.WriteLine($"Seat number: {seat.SeatNumber}");
             Console.WriteLine($"Class: {seat.Class}");
+
             if (seat.ExtraLegroom)
             {
                 Console.WriteLine("This seat includes extra legroom!");
             }
+
             Console.WriteLine("Price calculation has not been implemented");
             Console.ReadKey();
 
@@ -299,9 +307,10 @@ static class Menu
                         Console.ForegroundColor = ConsoleColor.White;
                     }
 
-                    Console.WriteLine($"  {options[i]}");
+                    Console.WriteLine($" {options[i]}");
 
-                    if (i == index) Console.ResetColor();
+                    if (i == index)
+                        Console.ResetColor();
                 }
 
                 var key = Console.ReadKey(true).Key;
@@ -325,13 +334,14 @@ static class Menu
 
                 for (int i = 0; i < 5; i++)
                 {
-
                     Console.SetCursorPosition(0, Console.CursorTop - 1);
-                    Console.Write(new string(' ', Console.WindowWidth)); 
+                    Console.Write(new string(' ', Console.WindowWidth));
                 }
+
                 Console.SetCursorPosition(0, Console.CursorTop);
             }
         }
+
         return "Exit";
     }
 }

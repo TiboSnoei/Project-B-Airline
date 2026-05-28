@@ -96,7 +96,8 @@ public class FlightOverviewCreator
                 int chosenflightindex = Menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
                 if (chosenflightindex == arrayfliteredflights.Length) {return;}
                 else {chosenflight = filteredflights[chosenflightindex];}
-                BookFlight.Bookflight(chosenflight);
+
+                BookFlight.Bookflight(chosenflight, AskForSeat(chosenflight));
             }
 
             else if (Returnflightselected)
@@ -115,13 +116,55 @@ public class FlightOverviewCreator
                 if (choseninboundflightindex == arrayinboundflight.Length) {return;}
                 else {choseninboundflight = inboundflights[choseninboundflightindex];}
 
-                BookFlight.Bookflight(chosenoutboundflight);
-                BookFlight.Bookflight(choseninboundflight);
+                BookFlight.Bookflight(chosenoutboundflight, AskForSeat(chosenoutboundflight));
+                BookFlight.Bookflight(choseninboundflight, AskForSeat(choseninboundflight));
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error printing flight overview: {ex.Message}");
         }
+    }
+
+    public string AskForSeat(FlightModel flight)
+    {
+        string[] options = { "Yes", "No" };
+
+        string context = "Reserving a seat will cost a small fee.\n";
+        string choice = Menu.VerticalMenu(
+            options,
+            "Would you like to reserve a seat?",
+            context
+        );
+
+        string selectedSeat = "Exit";
+        try
+        {            
+            switch (choice)
+            {
+                case "Yes":
+
+                    // Get seat map from business layer
+                    SeatLogic seatLogic = new SeatLogic();
+                    SeatModel[,] model = seatLogic.GetSeatMapByFlight(flight);
+
+                    string header = "Select Your Seat";
+                    string optionsHeader = "Available seats";
+
+                    selectedSeat = Menu.SeatMap(model, header, optionsHeader);
+                    break;
+
+                case "No":
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in seat overview: {ex.Message}");
+        }
+        return selectedSeat;
     }
 }
