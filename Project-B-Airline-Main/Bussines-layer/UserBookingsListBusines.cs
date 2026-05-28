@@ -43,7 +43,7 @@ public class UserBookingsListLogic
 
         foreach (CustomerFlightModel booking in bookings)
         {
-            FlightModel _Flight = flightlogic.GetFlightByID(booking.FlightID);
+            FlightModel _Flight = flightlogic.GetFlightById(booking.FlightID);
             if (_Flight is null)
             {
                 continue;

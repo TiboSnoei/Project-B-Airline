@@ -127,47 +127,36 @@ public class FlightAccess
         return flights;
     }
 
-    public FlightModel GetFlightByID(int FlightID)
+    public FlightModel GetFlightById(int FlightId)
     {
-        var flight = new FlightModel();
-        try
+        using var conn = new SqliteConnection(_connectionString);
+        conn.Open();
+
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"SELECT
+            FlightID, FlightNumber, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, DefaultPrice
+            FROM Flight
+            WHERE FlightId = @FlightId";
+
+        cmd.Parameters.AddWithValue("@FlightId", FlightId);
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
         {
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
-            using var command = connection.CreateCommand();
-
-            string sql = @"SELECT * FROM Flight WHERE FlightID = @FlightID";
-
-            command.CommandText = 
-                "SELECT * " +
-                "FROM Flight" +
-                "WHERE FlightID = @FlightID";
-
-            command.Parameters.AddWithValue("@FlightID", FlightID);
-
-            using var reader = command.ExecuteReader();
-            flight = new FlightModel
+            return new FlightModel
             {
                 FlightId = reader.GetInt32(0),
-                TailNumber = reader.GetString(1),
-                FlightNumber = reader.GetString(2),
-                Origin = reader.GetString(3),
-                Destination = reader.GetString(4),
-                TakeOffTime = reader.GetDateTime(5),
-                ArrivalTime = reader.GetDateTime(6),
-                LegroomFee = reader.GetInt32(7),
-                DefaultPrice = reader.GetInt32(8),
-                MealPrice = reader.GetInt32(9),
-                ChosenSeatFee = reader.GetInt32(10),
-                ExtraLuggageFee = reader.GetInt32(11)
+                FlightNumber = reader.GetString(1),
+                TailNumber = reader.GetString(2),
+                Destination = reader.GetString(3),
+                Origin = reader.GetString(4),
+                ArrivalTime = reader.GetDateTime(5),
+                TakeOffTime = reader.GetDateTime(6),
+                DefaultPrice = reader.GetInt32(7)
             };
         }
 
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error searching in flights {ex.Message}");
-            return new FlightModel();
-        }
-        return flight;
+        return null;
     }
 }
