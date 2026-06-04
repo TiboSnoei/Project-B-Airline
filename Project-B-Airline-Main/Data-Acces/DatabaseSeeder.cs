@@ -56,7 +56,9 @@ public class DatabaseSeeder
                 Email VARCHAR(100) NOT NULL,
                 created_at DATETIME NOT NULL,
                 TelNum VARCHAR(100) NOT NULL,
-                LoyaltyPoints INTEGER NOT NULL
+                LoyaltyPoints INTEGER NOT NULL,
+                RankName VARCHAR(100),
+                FOREIGN KEY (RankName) REFERENCES Ranks(Name)
             );",
 
             @"CREATE TABLE Flight (
@@ -86,6 +88,11 @@ public class DatabaseSeeder
                 ExtraLuggage BOOLEAN NOT NULL,
                 FOREIGN KEY(UserID) REFERENCES Users(UserID),
                 FOREIGN KEY(FlightID) REFERENCES Flight(FlightID)
+            );",
+
+            @"CREATE TABLE Ranks (
+                Name VARCHAR(100) PRIMARY KEY,
+                Requirement INTEGER NOT NULL
             );"
         };
 
@@ -131,7 +138,13 @@ public class DatabaseSeeder
             "('HR104', 'RO 1122', 'Rotterdam', 'Madrid', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100);",
 
             "INSERT INTO CustomerFlight (UserID, FlightID, Seat, SeatChosen, ExtraLegroom, OnflightMeal, ExtraLuggage) VALUES " +
-            "(1, 1, '12C', 0, 0, 0, 0);"
+            "(1, 1, '12C', 0, 0, 0, 0);",
+
+            "INSERT INTO Ranks (Name, Requirement) VALUES " +
+            "('Bronze', 1000)," +
+            "('Silver', 2500)," +
+            "('Gold', 5000)," +
+            "('Platinum', 10000)"
         };
 
         foreach (var cmdText in commands)
