@@ -13,40 +13,10 @@ public class GainLoyaltyPointsAcces
         _connectionString = $"Data Source={dbPath}";
     }
 
-    public int GetCurrentLoyaltyPoints()
-    {
-        try
-        {
-            
-            using var conn = new SqliteConnection(_connectionString);
-            conn.Open();
-
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = @"
-            SELECT
-            LoyaltyPoints
-            FROM Users
-            WHERE UserID = $UserID";
-
-            cmd.Parameters.AddWithValue("$UserID", LoggedInUser.UserID);
-
-            using var reader = cmd.ExecuteReader();
-
-            return reader.GetInt32(0);
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine($"Error Reading Current Loyalty Points From Database (GainLoyaltyPointsAcces): {ex} ");
-            return 0;
-        }
-    }
-
     public bool WriteLoyaltyPoints()
     {
         try
         {
-            int CurrentLoyaltyPoints = GetCurrentLoyaltyPoints();
-
             using var conn = new SqliteConnection(_connectionString);
             conn.Open();
 
@@ -57,8 +27,11 @@ public class GainLoyaltyPointsAcces
                 LoyaltyPoints = $LoyaltyPoints
             WHERE UserID = $UserID";
 
-            cmd.Parameters.AddWithValue("LoyaltyPoints", GetCurrentLoyaltyPoints() + LoyaltyPointsToAdd);
+            cmd.Parameters.AddWithValue("LoyaltyPoints", LoggedInUser.LoyaltyPoints + LoyaltyPointsToAdd);
             int rowsAffected = cmd.ExecuteNonQuery();
+
+            LoggedInUser.LoyaltyPoints = LoggedInUser.LoyaltyPoints + LoyaltyPointsToAdd;
+
             return rowsAffected > 0;
         }
 
