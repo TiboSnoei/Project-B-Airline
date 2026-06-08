@@ -22,6 +22,7 @@ public class GainLoyaltyPointsBusiness
         catch(Exception ex)
         {
             Console.WriteLine($"Error While Adding/Writing Loyalty Points To Account (GainLoyaltyPointsBuisiness): {ex}");
+            Console.ReadKey();
         }
     }
 }

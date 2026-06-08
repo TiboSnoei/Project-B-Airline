@@ -27,7 +27,8 @@ public class GainLoyaltyPointsAcces
                 LoyaltyPoints = $LoyaltyPoints
             WHERE UserID = $UserID";
 
-            cmd.Parameters.AddWithValue("LoyaltyPoints", LoggedInUser.LoyaltyPoints + LoyaltyPointsToAdd);
+            cmd.Parameters.AddWithValue("$LoyaltyPoints", LoggedInUser.LoyaltyPoints + LoyaltyPointsToAdd);
+            cmd.Parameters.AddWithValue("$UserID", LoggedInUser.UserID);
             int rowsAffected = cmd.ExecuteNonQuery();
 
             LoggedInUser.LoyaltyPoints = LoggedInUser.LoyaltyPoints + LoyaltyPointsToAdd;
@@ -38,6 +39,7 @@ public class GainLoyaltyPointsAcces
         catch(Exception ex)
         {
             Console.WriteLine($"Error While Adding/Writing Loyalty Points To Account (GainLoyaltyPointsAcces): {ex}");
+            Console.ReadKey();
             return false;
         }
     }

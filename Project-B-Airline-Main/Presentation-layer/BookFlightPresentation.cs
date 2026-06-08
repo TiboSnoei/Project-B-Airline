@@ -68,6 +68,8 @@ public static class BookFlight
                     Console.Clear();
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
                     BookFlightAccess.EnterIntoDatabase(chosenflight);
+                    var gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenflight.DefaultPrice); // TODO: Add Correct Total Price
+                    gainLoyaltyPointsBusiness.GiveLoyaltyPoints();
                     Console.ReadKey();
                     break;
 
