@@ -19,9 +19,9 @@ public static class BookFlight
                 case "Yes":
                     Console.Clear();
 
-                    string[] options2 = { "Log In", "Create Account" };
+                    string[] options2 = { "Log In", "Create Account", "Cancel Booking" };
                     Menu menu2 = new Menu();
-                    string context2 = "To complete your booking, you need to have an account. Please choose one of the options below to proceed.\n";
+                    string context2 = "\nTo complete your booking, you need to have an account. Please choose one of the options below to proceed.\n";
                     string choice2 = menu2.VerticalMenu(options2, "Do you want to log in or register a new account?", context2);
 
                     switch (choice2)
@@ -43,6 +43,11 @@ public static class BookFlight
 
                             BookFlightAccess.EnterIntoDatabase(chosenflight);
                             break;
+                        
+                        case "Cancel Booking":
+                            Console.WriteLine("Booking cancelled. Returning to menu.");
+                            Console.ReadKey();
+                            break;
                     }
                     break;
 
@@ -54,6 +59,7 @@ public static class BookFlight
                     break;
             }
         }
+
         // Als de user al ingelogd is word dit blok uitgevoerd.
         // De user krijgt de optie om de boeking te bevestigen of annuleren en word daarna terug gestuurd naar de flight overview.
         else
@@ -62,6 +68,16 @@ public static class BookFlight
             {
                 case "Yes":
                     Console.Clear();
+                    // checking the user's loyalty rank and if it will increase after booking the flight
+                    if (Session.LoggedInUser != null)
+                    {
+                        bool rankIncrease = BookFlightBusiness.CheckRankIncrease(Session.LoggedInUser, chosenflight);
+                        if (rankIncrease)
+                        {
+                            Console.WriteLine("Booking this flight will increase your loyalty rank! Press [enter] to continue.");
+                            Console.ReadKey();
+                        }
+                    }
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
                     BookFlightAccess.EnterIntoDatabase(chosenflight);
                     Console.ReadKey();

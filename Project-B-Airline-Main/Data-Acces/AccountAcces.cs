@@ -22,8 +22,8 @@ public class AccountAccess
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
-        var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints)
-                    VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints)";
+        var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName)
+                    VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints, @RankName)";
 
         using var command = new SqliteCommand(sql, connection);
         command.Parameters.AddWithValue("@UserType", "Customer");
@@ -34,6 +34,7 @@ public class AccountAccess
         command.Parameters.AddWithValue("@CreatedAt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         command.Parameters.AddWithValue("@TelNum", account.TelNum);
         command.Parameters.AddWithValue("@LoyaltyPoints", 0);
+        command.Parameters.AddWithValue("@RankName", "Bronze");
 
         command.ExecuteNonQuery();
     }
@@ -44,7 +45,7 @@ public class AccountAccess
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
-        var sql = "SELECT UserID, UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users WHERE Email = @Email";
+        var sql = "SELECT UserID, UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName FROM Users WHERE Email = @Email";
 
         using var command = new SqliteCommand(sql, connection);
         command.Parameters.AddWithValue("@Email", email);
@@ -62,7 +63,8 @@ public class AccountAccess
                 Email = reader.GetString(5),
                 CreatedAt = DateTime.Parse(reader.GetString(6)),
                 TelNum = reader.GetString(7),
-                LoyaltyPoints = reader.GetInt32(8)
+                LoyaltyPoints = reader.GetInt32(8),
+                RankName = reader.GetString(9)
             };
         }
 
@@ -96,7 +98,7 @@ public class AccountAccess
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
-        var sql = "SELECT UserID, UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints FROM Users";
+        var sql = "SELECT UserID, UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName FROM Users";
 
         using var command = new SqliteCommand(sql, connection);
         using var reader = command.ExecuteReader();
@@ -113,7 +115,8 @@ public class AccountAccess
                 Email = reader.GetString(5),
                 CreatedAt = DateTime.Parse(reader.GetString(6)),
                 TelNum = reader.GetString(7),
-                LoyaltyPoints = reader.GetInt32(8)
+                LoyaltyPoints = reader.GetInt32(8),
+                RankName = reader.GetString(9)
             });
         }
 
@@ -126,8 +129,8 @@ public class AccountAccess
         connection.Open();
 
         var sql = @"UPDATE Users
-                    SET Email = @Email, Password = @Password, UserType = @UserType FirstName = @FirstName,
-                        LastName = @LastName, TelNum = @TelNum, LoyaltyPoints = @LoyaltyPoints
+                    SET Email = @Email, Password = @Password, UserType = @UserType, FirstName = @FirstName,
+                        LastName = @LastName, TelNum = @TelNum, LoyaltyPoints = @LoyaltyPoints, RankName = @RankName
                     WHERE UserID = @UserID";
 
         using var command = new SqliteCommand(sql, connection);
@@ -138,6 +141,7 @@ public class AccountAccess
         command.Parameters.AddWithValue("@LastName", updatedAccount.LastName);
         command.Parameters.AddWithValue("@TelNum", updatedAccount.TelNum);
         command.Parameters.AddWithValue("@LoyaltyPoints", updatedAccount.LoyaltyPoints);
+        command.Parameters.AddWithValue("@RankName", updatedAccount.RankName);
         command.Parameters.AddWithValue("@UserID", updatedAccount.UserID);
 
         command.ExecuteNonQuery();

@@ -9,4 +9,5 @@ public class AccountModel
     public DateTime CreatedAt { get; set; }
     public string TelNum { get; set; }
     public int LoyaltyPoints { get; set; }
+    public string? RankName { get; set; }  // name of the loyalty rank
 }
