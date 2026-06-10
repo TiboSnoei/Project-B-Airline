@@ -77,7 +77,7 @@ public static class BookFlight
                     if (Session.LoggedInUser != null)
                     {
                         bool rankIncrease = BookFlightBusiness.CheckRankIncrease(Session.LoggedInUser, chosenflight);
-                        if (rankIncrease)
+                        if (rankIncrease is true)
                         {
                             Console.WriteLine("Booking this flight will increase your loyalty rank! Press [enter] to continue.");
                             Console.ReadKey();
