@@ -9,9 +9,10 @@ public static class BookFlight
         string context = $"You have selected flight {chosenflight.FlightNumber} from {chosenflight.Origin} to {chosenflight.Destination}.\nThe price for this flight is {chosenflight.DefaultPrice}. Do you want to book this flight?\n";
         string choice = menu.VerticalMenu(options, "Confirm Booking", context);
 
-        // Checkt of de user ingelogd is of niet, skipt dit blok als de user al ingelogd is.
-        // Als de niet ingelogde user inlogt of een account maakt word daarna de boeking in de database gezet.
-        // Als de user ervoor kiest om de boeking te annuleren word deze terug gestuurd naar de flight overview.
+        // Checks if the user is already logged in, if not it gives the user the option to log in or create an account to complete the booking.
+        // If the user chooses to cancel, they will be redirected back to the flight overview.
+        // If the user chooses to log in or create an account, they will be redirected to the respective menu and after completing the process, 
+        // the booking will be confirmed and they will be redirected back to their account page.
         if (Session.LoggedInUser == null)
         {
             switch (choice)
@@ -32,7 +33,7 @@ public static class BookFlight
 
                             Console.Clear();
 
-                            BookFlightAccess.EnterIntoDatabase(chosenflight);
+                            BookFlightBusiness.EnterIntoDatabase(chosenflight);
                             var gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenflight.DefaultPrice); // TODO: Add Correct Total Price
                             gainLoyaltyPointsBusiness.GiveLoyaltyPoints();
                             break;
@@ -43,7 +44,7 @@ public static class BookFlight
 
                             Console.Clear();
 
-                            BookFlightAccess.EnterIntoDatabase(chosenflight);
+                            BookFlightBusiness.EnterIntoDatabase(chosenflight);
                             gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenflight.DefaultPrice); // TODO: Add Correct Total Price
                             gainLoyaltyPointsBusiness.GiveLoyaltyPoints();
                             break;
@@ -64,8 +65,8 @@ public static class BookFlight
             }
         }
 
-        // Als de user al ingelogd is word dit blok uitgevoerd.
-        // De user krijgt de optie om de boeking te bevestigen of annuleren en word daarna terug gestuurd naar de flight overview.
+        // If the user is already logged in the code jumps to this part, where the user gets the option to
+        // confirm or cancel the booking and then gets redirected to the flight overview.
         else
         {
             switch (choice)
@@ -83,7 +84,7 @@ public static class BookFlight
                         }
                     }
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");
-                    BookFlightAccess.EnterIntoDatabase(chosenflight);
+                    BookFlightBusiness.EnterIntoDatabase(chosenflight);
                     var gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenflight.DefaultPrice); // TODO: Add Correct Total Price
                     gainLoyaltyPointsBusiness.GiveLoyaltyPoints();
                     Console.ReadKey();

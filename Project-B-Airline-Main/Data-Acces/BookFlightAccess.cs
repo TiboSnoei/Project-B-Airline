@@ -10,8 +10,8 @@ public class BookFlightAccess
         _connectionString = $"Data Source={dbPath}";
     }
 
-    // Slaat een nieuwe customerflight op in de database.
-    // De method word aangeroepen in de presentation layer nadat een user een boeking heeft bevestigd.
+    // Saves the new customerflight in the database.
+    // This method is called in the business layer after a user has confirmed a booking.
     public void Write(CustomerFlightModel customerFlight)
     {
         try
@@ -46,9 +46,9 @@ public class BookFlightAccess
         }
     }
 
-// Deze method word aangeroepen in de presentation layer nadat een user een boeking heeft bevestigd.
-// De method maakt een customerflightmodel aan en roept daarna de write method aan om deze in de database op te slaan.
-public static void EnterIntoDatabase(FlightModel chosenflight)
+// this method is called in the presentation layer after a user has confirmed a booking.
+// The method creates a customerflightmodel and then calls the write method to save it in the database.
+    public static void EnterIntoDatabase(FlightModel chosenflight)
     {
         try
         {            

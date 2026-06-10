@@ -1,6 +1,7 @@
-public class BookFlightBusiness
+public static class BookFlightBusiness
 {
         public static string GetRank(int LoyaltyPoints)
+        // This method checks the amount of loyalty points a user has and returns their loyalty rank as a string.
         {
             if (LoyaltyPoints >= 10000)
                 return "Platinum";
@@ -27,5 +28,12 @@ public class BookFlightBusiness
                 string? oldRank = account.RankName;
         
                 return newRank != oldRank;
+        }
+
+        // This method is called in the presentation layer to confirm a booking.
+        // It calls the method from the data access later to save the booking in the database.
+        public static void EnterIntoDatabase(FlightModel chosenflight)
+        {
+            BookFlightAccess.EnterIntoDatabase(chosenflight);
         }
 }
