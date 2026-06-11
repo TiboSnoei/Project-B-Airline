@@ -12,7 +12,7 @@ public static class BookFlightBusiness
         else if (LoyaltyPoints >= 1000)
             return "Bronze";
         else
-            return null;
+            return "-";
     }
 
     // Checks the amount of loyalty points the user has, and the price of the flight they booked.
@@ -21,11 +21,14 @@ public static class BookFlightBusiness
     // and returns 'true' if the rank will increase and 'false' if the rank will stay the same.
     public static bool CheckRankIncrease(AccountModel account, FlightModel chosenFlight)
     {
+        var _GainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenFlight.DefaultPrice);
         int pointsBefore = account.LoyaltyPoints;
-        int pointsAfter = account.LoyaltyPoints + (int)chosenFlight.DefaultPrice;
+        int pointsAfter = account.LoyaltyPoints + _GainLoyaltyPointsBusiness.CalculateLoyaltyPoints();
 
         string newRank = GetRank(pointsAfter);
-        string? oldRank = account.RankName;
+        string oldRank = account.RankName;
+
+        if (newRank.StartsWith("-")) newRank = oldRank;
 
         return newRank != oldRank;
     }
