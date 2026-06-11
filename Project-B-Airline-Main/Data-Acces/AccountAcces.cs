@@ -34,7 +34,7 @@ public class AccountAccess
         command.Parameters.AddWithValue("@CreatedAt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         command.Parameters.AddWithValue("@TelNum", account.TelNum);
         command.Parameters.AddWithValue("@LoyaltyPoints", 0);
-        command.Parameters.AddWithValue("@RankName", "Bronze");
+        command.Parameters.AddWithValue("@RankName", "-");
 
         command.ExecuteNonQuery();
     }

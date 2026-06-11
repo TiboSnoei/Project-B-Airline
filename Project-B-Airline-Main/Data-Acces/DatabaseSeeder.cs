@@ -57,8 +57,7 @@ public class DatabaseSeeder
                 created_at DATETIME NOT NULL,
                 TelNum VARCHAR(100) NOT NULL,
                 LoyaltyPoints INTEGER NOT NULL,
-                RankName VARCHAR(100) NOT NULL,
-                FOREIGN KEY (RankName) REFERENCES Ranks(Name)
+                RankName VARCHAR(100) NOT NULL
             );",
 
             @"CREATE TABLE Flight (
@@ -121,7 +120,7 @@ public class DatabaseSeeder
             "('HR103', 345, 'Airbus 330')," +
             "('HR104', 345, 'Airbus 330');",
 
-            "INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints) VALUES " +
+            "INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName) VALUES " +
             $"('Customer', 'Bob', 'Marten', '{hashedBobPassword}', 'BobMarten@gmail.com', '2026-05-01 00:00:00', '0676543566', 10000, '-')," +
             $"('Admin', 'Ad', 'Min', '{hashedAdminPassword}', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0, '-');",
 
