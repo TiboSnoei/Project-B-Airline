@@ -13,18 +13,23 @@ public class UserBookingsListPresentation
         string optionsheader = string.Format(spacingformat, "FlightNumber", "Tailnumber", "Seat", "TakeOffTime", "ArrivalTime", "Price", "Destination", "Departure");
         string[] optionsarray = userBookingsListLogic.GetBookings();
 
-        // Console.WriteLine(optionsarray);
-        
-        int chosenbookingindex = menu.VerticalMenuWithColumns(optionsarray, header, optionsheader);
-        if (chosenbookingindex == optionsarray.Length)
+        if (optionsarray.Length < 0)
         {
-            return;
+            int chosenbookingindex = menu.VerticalMenuWithColumns(optionsarray, header, optionsheader);
+            if (chosenbookingindex == optionsarray.Length)
+            {
+                return;
+            }
+            
+            else
+            {
+                CustomerFlightModel selectedbooking = BookingsList[chosenbookingindex];
+                Console.WriteLine("Viewing and upgrading bookings not implomented yet"); // TODO: the menu to view and upgrade your booking as a customer is not implomented yet. impoment it.
+            }
         }
-        
-        else
-        {
-            CustomerFlightModel selectedbooking = BookingsList[chosenbookingindex];
-            Console.WriteLine("Viewing and upgrading bookings not implomented yet"); // TODO: the menu to view and upgrade your booking as a customer is not implomented yet. impoment it.
-        }
+
+        Console.Clear();
+        Console.WriteLine("\nThere are no bookings for this account.\n");
+        Console.WriteLine("Press ESC to return.");
     }
 }

@@ -57,7 +57,7 @@ public class DatabaseSeeder
                 created_at DATETIME NOT NULL,
                 TelNum VARCHAR(100) NOT NULL,
                 LoyaltyPoints INTEGER NOT NULL,
-                RankName VARCHAR(100),
+                RankName VARCHAR(100) NOT NULL,
                 FOREIGN KEY (RankName) REFERENCES Ranks(Name)
             );",
 

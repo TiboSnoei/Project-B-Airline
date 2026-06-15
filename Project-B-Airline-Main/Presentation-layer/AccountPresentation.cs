@@ -85,7 +85,8 @@ public class AccountPresentation
                     LastName = lastName,
                     Email = email,
                     Password = password,
-                    TelNum = telNum
+                    TelNum = telNum,
+                    RankName = "-"
                 };
 
                 success = _accountLogic.CreateAccount(newAccount);

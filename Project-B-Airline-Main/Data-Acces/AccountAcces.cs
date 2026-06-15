@@ -22,8 +22,8 @@ public class AccountAccess
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
 
-        var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints)
-                    VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints)";
+        var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName)
+                    VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints, @RankName)";
 
         using var command = new SqliteCommand(sql, connection);
         command.Parameters.AddWithValue("@UserType", "Customer");
@@ -34,6 +34,7 @@ public class AccountAccess
         command.Parameters.AddWithValue("@CreatedAt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         command.Parameters.AddWithValue("@TelNum", account.TelNum);
         command.Parameters.AddWithValue("@LoyaltyPoints", 0);
+        command.Parameters.AddWithValue("@RankName", account.RankName);
 
         command.ExecuteNonQuery();
     }
