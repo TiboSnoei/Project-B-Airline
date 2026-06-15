@@ -36,6 +36,16 @@ public static class BookFlight
                             BookFlightBusiness.EnterIntoDatabase(chosenflight);
                             var gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenflight.DefaultPrice); // TODO: Add Correct Total Price
                             gainLoyaltyPointsBusiness.GiveLoyaltyPoints();
+                            if (Session.LoggedInUser != null)
+                            {
+                                bool rankIncrease = BookFlightBusiness.CheckRankIncrease(Session.LoggedInUser, chosenflight);
+                                if (rankIncrease is true)
+                                {
+                                    Console.WriteLine("Booking this flight will increase your loyalty rank! Press [enter] to continue.");
+                                    Console.ReadKey();
+                                    BookFlightBusiness.UpdateLoyaltyRank(Session.LoggedInUser, chosenflight);
+                                }
+                            }
                             break;
 
                         case "Create Account":
@@ -47,6 +57,16 @@ public static class BookFlight
                             BookFlightBusiness.EnterIntoDatabase(chosenflight);
                             gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenflight.DefaultPrice); // TODO: Add Correct Total Price
                             gainLoyaltyPointsBusiness.GiveLoyaltyPoints();
+                            if (Session.LoggedInUser != null)
+                            {
+                                bool rankIncrease = BookFlightBusiness.CheckRankIncrease(Session.LoggedInUser, chosenflight);
+                                if (rankIncrease is true)
+                                {
+                                    Console.WriteLine("Booking this flight will increase your loyalty rank! Press [enter] to continue.");
+                                    Console.ReadKey();
+                                    BookFlightBusiness.UpdateLoyaltyRank(Session.LoggedInUser, chosenflight);
+                                }
+                            }
                             break;
                         
                         case "Cancel Booking":
@@ -81,6 +101,7 @@ public static class BookFlight
                         {
                             Console.WriteLine("Booking this flight will increase your loyalty rank! Press [enter] to continue.");
                             Console.ReadKey();
+                            BookFlightBusiness.UpdateLoyaltyRank(Session.LoggedInUser, chosenflight);
                         }
                     }
                     Console.WriteLine("Booking confirmed! Returning to flight overview.");

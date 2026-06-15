@@ -13,7 +13,7 @@ public class BookflightBusinessTests
         Assert.AreEqual("Silver", BookFlightBusiness.GetRank(2500));
         Assert.AreEqual("Bronze", BookFlightBusiness.GetRank(2499));
         Assert.AreEqual("Bronze", BookFlightBusiness.GetRank(1000));
-        Assert.IsNull(BookFlightBusiness.GetRank(999));
+        Assert.AreEqual("-", BookFlightBusiness.GetRank(999));
     }
 
     [TestMethod]

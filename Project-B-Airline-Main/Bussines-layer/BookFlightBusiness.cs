@@ -34,9 +34,17 @@ public static class BookFlightBusiness
     }
 
     // This method is called in the presentation layer to confirm a booking.
-    // It calls the method from the data access later to save the booking in the database.
+    // It calls the method from the data access layer to save the booking in the database.
     public static void EnterIntoDatabase(FlightModel chosenflight)
     {
         BookFlightAccess.EnterIntoDatabase(chosenflight);
+    }
+
+    // This method is called in the presentation layer after a user has confirmed a booking and gained loyalty points.
+    // It calls the method in the data access layer to update the loyalty rank of the user in the database if they have gained enough loyalty points to increase their rank.
+    public static void UpdateLoyaltyRank(AccountModel LoggedInUser, FlightModel chosenFlight)
+    {
+        var bookFlightAccess = new BookFlightAccess();
+        bookFlightAccess.UpdateLoyaltyRank(LoggedInUser, chosenFlight);
     }
 }

@@ -131,7 +131,10 @@ public class AccountPresentation
         if (account != null)
         {
             Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
-            Console.WriteLine($"Your current loyalty rank is: {account.RankName}");
+            if (account.RankName != "-")
+            {
+                Console.WriteLine($"Your current loyalty rank is: {account.RankName}");
+            }
             Session.SetUser(account);
         }
         else
