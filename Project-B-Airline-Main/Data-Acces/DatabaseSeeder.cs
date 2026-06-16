@@ -41,6 +41,11 @@ public class DatabaseSeeder
 
         var commands = new List<string>
         {
+            @"CREATE TABLE Ranks (
+                Name VARCHAR(100) PRIMARY KEY,
+                Requirement INTEGER NOT NULL
+            );",
+
             @"CREATE TABLE Plane (
                 TailNumber VARCHAR(100) PRIMARY KEY,
                 SeatCount INTEGER NOT NULL,
@@ -88,11 +93,6 @@ public class DatabaseSeeder
                 ExtraLuggage BOOLEAN NOT NULL,
                 FOREIGN KEY(UserID) REFERENCES Users(UserID),
                 FOREIGN KEY(FlightID) REFERENCES Flight(FlightID)
-            );",
-
-            @"CREATE TABLE Ranks (
-                Name VARCHAR(100) PRIMARY KEY,
-                Requirement INTEGER NOT NULL
             );"
         };
 
@@ -115,15 +115,22 @@ public class DatabaseSeeder
 
         var commands = new List<string>
         {
+            "INSERT INTO Ranks (Name, Requirement) VALUES " +
+            "('-', 0)," +
+            "('Bronze', 1000)," +
+            "('Silver', 2500)," +
+            "('Gold', 5000)," +
+            "('Platinum', 10000);",
+
             "INSERT INTO Plane (TailNumber, SeatCount, Model) VALUES " +
             "('HR101', 250, 'Boeing-737')," +
             "('HR102', 250, 'Boeing-737')," +
             "('HR103', 345, 'Airbus 330')," +
             "('HR104', 345, 'Airbus 330');",
 
-            "INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints) VALUES " +
-            $"('Customer', 'Bob', 'Marten', '{hashedBobPassword}', 'BobMarten@gmail.com', '2026-05-01 00:00:00', '0676543566', 0)," +
-            $"('Admin', 'Ad', 'Min', '{hashedAdminPassword}', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0);",
+            "INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName) VALUES " +
+            $"('Customer', 'Bob', 'Marten', '{hashedBobPassword}', 'BobMarten@gmail.com', '2026-05-01 00:00:00', '0676543566', 10000, 'Platinum')," +
+            $"('Admin', 'Ad', 'Min', '{hashedAdminPassword}', 'Admin@duckteep.com', '2026-05-01 00:00:00', '0676543566', 0, '-');",
 
             "INSERT INTO Flight (TailNumber, FlightNumber, Origin, Destination, DepartureTime, ArrivalTime, LegroomFee, DefaultPrice, MealFee, ChosenSeatFee, ExtraLuggageFee) VALUES " +
             "('HR101', 'RO 1122', 'Rotterdam', 'Berlin', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100)," +
@@ -138,13 +145,7 @@ public class DatabaseSeeder
             "('HR104', 'RO 1122', 'Rotterdam', 'Madrid', '2026-05-01 12:45:00', '2026-05-01 14:15:00', 100, 100, 100, 100, 100);",
 
             "INSERT INTO CustomerFlight (UserID, FlightID, Seat, SeatChosen, ExtraLegroom, OnflightMeal, ExtraLuggage) VALUES " +
-            "(1, 1, '12C', 0, 0, 0, 0);",
-
-            "INSERT INTO Ranks (Name, Requirement) VALUES " +
-            "('Bronze', 1000)," +
-            "('Silver', 2500)," +
-            "('Gold', 5000)," +
-            "('Platinum', 10000)"
+            "(1, 1, '12C', 0, 0, 0, 0);"
         };
 
         foreach (var cmdText in commands)

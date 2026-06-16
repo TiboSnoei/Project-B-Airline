@@ -10,8 +10,8 @@ public class BookFlightAccess
         _connectionString = $"Data Source={dbPath}";
     }
 
-    // Slaat een nieuwe customerflight op in de database.
-    // De method word aangeroepen in de presentation layer nadat een user een boeking heeft bevestigd.
+    // Saves the new customerflight in the database.
+    // This method is called in the business layer after a user has confirmed a booking.
     public void Write(CustomerFlightModel customerFlight)
     {
         try
@@ -46,9 +46,9 @@ public class BookFlightAccess
         }
     }
 
-// Deze method word aangeroepen in de presentation layer nadat een user een boeking heeft bevestigd.
-// De method maakt een customerflightmodel aan en roept daarna de write method aan om deze in de database op te slaan.
-public static void EnterIntoDatabase(FlightModel chosenflight)
+// this method is called in the presentation layer after a user has confirmed a booking.
+// The method creates a customerflightmodel and then calls the write method to save it in the database.
+    public static void EnterIntoDatabase(FlightModel chosenflight)
     {
         try
         {            
@@ -70,6 +70,46 @@ public static void EnterIntoDatabase(FlightModel chosenflight)
         {
             Console.WriteLine(Exception.Message);
             throw;
+        }
+    }
+
+    // this method updates the loyalty rank of the user after they have gained loyalty points.
+    // if the user has gained enough loyalty points to increase their rank, this method will update their rank in the database.
+    // from < 1000 to 1000 or above: '-' to 'Bronze'
+    // from < 2500 to 2500 or above: 'Bronze' to 'Silver'
+    // from < 5000 to 5000 or above: 'Silver' to 'Gold'
+    // from < 10000 to 10000 or above: 'Gold' to 'Platinum'
+    public void UpdateLoyaltyRank(AccountModel LoggedInUser, FlightModel chosenFlight)
+    {
+        var gainLoyaltyPointsBusiness = new GainLoyaltyPointsBusiness(chosenFlight.DefaultPrice);
+        int pointsAfter = LoggedInUser.LoyaltyPoints + gainLoyaltyPointsBusiness.CalculateLoyaltyPoints();
+
+        string newRank = BookFlightBusiness.GetRank(pointsAfter);
+
+        try
+        {
+            using var conn = new SqliteConnection(_connectionString);
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = @"
+            UPDATE Users
+            SET
+                RankName = $RankName
+            WHERE UserID = $UserID";
+
+            cmd.Parameters.AddWithValue("$RankName", newRank);
+            cmd.Parameters.AddWithValue("$UserID", LoggedInUser.UserID);
+            int rowsAffected = cmd.ExecuteNonQuery();
+
+            if (rowsAffected > 0)
+                Console.WriteLine($"Congratulations! Your loyalty rank has been updated to {newRank}.");
+            else
+                Console.WriteLine("Failed to update loyalty rank. Please try again!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating loyalty rank in database: {ex.Message}");
         }
     }
 }
