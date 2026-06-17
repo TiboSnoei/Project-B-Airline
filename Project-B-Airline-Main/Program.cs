@@ -51,7 +51,7 @@ class Program
                     }
                     else
                     {
-                        Console.WriteLine("Login failed.");
+                        Console.WriteLine("Login failed. Press [enter] to retry.");
                         Console.ReadKey();
                     }
                     break;

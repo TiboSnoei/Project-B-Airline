@@ -9,8 +9,8 @@ public class FlightPresentation
         Console.Clear();
         Console.WriteLine("=== Create Flight ===\n");
 
-        string tailNumber = GetValidString("Plane tail number: ");
-        string flightNumber = GetValidString("Flight number: ");
+        string tailNumber = GetValidString("Plane tail number (HRXXX): ");
+        string flightNumber = GetValidString("Flight number (RA-XXXX): ");
         string destination = GetValidString("Destination: ");
         string origin = GetValidString("Origin: ");
         DateTime takeOff = GetValidDateTime("Takeoff (yyyy-MM-dd HH:mm): ");
@@ -20,7 +20,6 @@ public class FlightPresentation
         int mealPrice = GetValidInt("Meal price: ");
         int chosenSeatFee = GetValidInt("Chosen seat fee: ");
         int extraLuggageFee = GetValidInt("Extra luggage fee: ");
-
 
         var flight = new FlightModel
         {

@@ -24,8 +24,6 @@ public class AccountAccess
 
         var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName)
                     VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints, @RankName)";
-        var sql = @"INSERT INTO Users (UserType, FirstName, LastName, Password, Email, created_at, TelNum, LoyaltyPoints, RankName)
-                    VALUES (@UserType, @FirstName, @LastName, @Password, @Email, @CreatedAt, @TelNum, @LoyaltyPoints, @RankName)";
 
         using var command = new SqliteCommand(sql, connection);
         command.Parameters.AddWithValue("@UserType", "Customer");
