@@ -10,10 +10,10 @@ public class UserBookingsListPresentation
 
         string spacingformat = "{0,-25}|{1,-25}|{2,-25}|{3,-25}|{4,-25}|{5,-25}|{6,-25}|{7,-25}";
         string header = "Your Bookings";
-        string optionsheader = string.Format(spacingformat, "FlightNumber", "Tailnumber", "Seat", "TakeOffTime", "ArrivalTime", "Price", "Destination", "Departure");
+        string optionsheader = string.Format(spacingformat, "FlightNumber", "Tailnumber", "Seat", "TakeOffTime", "ArrivalTime", "Price", "Departure", "Destination");
         string[] optionsarray = userBookingsListLogic.GetBookings();
 
-        if (optionsarray.Length < 0)
+        if (optionsarray.Length > 0)
         {
             int chosenbookingindex = menu.VerticalMenuWithColumns(optionsarray, header, optionsheader);
             if (chosenbookingindex == optionsarray.Length)
@@ -28,8 +28,11 @@ public class UserBookingsListPresentation
             }
         }
 
-        Console.Clear();
-        Console.WriteLine("\nThere are no bookings for this account.\n");
-        Console.WriteLine("Press ESC to return.");
+        else
+        {
+            Console.Clear();
+            Console.WriteLine("\nThere are no bookings for this account.\n");
+            Console.WriteLine("Press ESC to return.");
+        }
     }
 }

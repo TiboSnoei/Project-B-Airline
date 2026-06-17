@@ -54,10 +54,10 @@ public class UserBookingsListLogic
             var _TakeOffTime = _Flight.TakeOffTime;
             var _ArrivalTime = _Flight.ArrivalTime;
             var _Price = _Flight.DefaultPrice; // TODO: Price needs to be chanced when upgrades/extras are booked or loyalty bonuses are givven.
-            var _Destination = _Flight.Destination;
             var _Origin = _Flight.Origin;
+            var _Destination = _Flight.Destination;
 
-            string option = string.Format(spacingformat, _FlightNumber, _TailNumber, booking.Seat, _TakeOffTime, _ArrivalTime, _Price, _Destination, _Origin);
+            string option = string.Format(spacingformat, _FlightNumber, _TailNumber, booking.Seat, _TakeOffTime, _ArrivalTime, _Price, _Origin, _Destination);
             optionslist.Add(option);
         }
 
