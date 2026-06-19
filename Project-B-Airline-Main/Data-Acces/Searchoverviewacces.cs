@@ -44,7 +44,7 @@ public class SearchoverviewAcces
 
             // TODO: imploment dapper
             cmd.CommandText =
-                "SELECT FlightID, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, DefaultPrice " +
+                "SELECT FlightID, FlightNumber, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, DefaultPrice " +
                 "FROM Flight " +
                 "WHERE Destination = @Destination " +
                 "AND Origin = @Origin " +
@@ -63,12 +63,13 @@ public class SearchoverviewAcces
                 results.Add(new FlightModel
                 {
                     FlightId = reader.GetInt32(0),
-                    TailNumber = reader.GetString(1),
-                    Destination = reader.GetString(2),
-                    Origin = reader.GetString(3),
-                    ArrivalTime = reader.GetDateTime(4),
-                    TakeOffTime = reader.GetDateTime(5),
-                    DefaultPrice = reader.GetInt32(6)
+                    FlightNumber = reader.GetString(1),
+                    TailNumber = reader.GetString(2),
+                    Destination = reader.GetString(3),
+                    Origin = reader.GetString(4),
+                    ArrivalTime = reader.GetDateTime(5),
+                    TakeOffTime = reader.GetDateTime(6),
+                    DefaultPrice = reader.GetInt32(7)
                 });
             }
         }

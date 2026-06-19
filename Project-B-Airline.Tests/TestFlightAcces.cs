@@ -23,6 +23,7 @@ public class FlightAccessTests
         var flight = new FlightModel
         {
             TailNumber = $"HR101",
+            FlightNumber = "RO-1234",
             Origin = "Amsterdam",
             Destination = "London",
             TakeOffTime = DateTime.Now.AddHours(2),
@@ -62,6 +63,7 @@ public class FlightAccessTests
         var flight = new FlightModel
         {
             TailNumber = $"HR102",
+            FlightNumber = "RO-9999",
             Origin = "Paris",
             Destination = "Berlin",
             TakeOffTime = DateTime.Now.AddHours(1),

@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Data.Sqlite;
-using System.IO;
 
 public class FlightAccess
 {
@@ -128,5 +125,38 @@ public class FlightAccess
         }
 
         return flights;
+    }
+
+    public FlightModel GetFlightById(int FlightId)
+    {
+        using var conn = new SqliteConnection(_connectionString);
+        conn.Open();
+
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = @"SELECT
+            FlightID, FlightNumber, TailNumber, Destination, Origin, ArrivalTime, DepartureTime, DefaultPrice
+            FROM Flight
+            WHERE FlightId = @FlightId";
+
+        cmd.Parameters.AddWithValue("@FlightId", FlightId);
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return new FlightModel
+            {
+                FlightId = reader.GetInt32(0),
+                FlightNumber = reader.GetString(1),
+                TailNumber = reader.GetString(2),
+                Destination = reader.GetString(3),
+                Origin = reader.GetString(4),
+                ArrivalTime = reader.GetDateTime(5),
+                TakeOffTime = reader.GetDateTime(6),
+                DefaultPrice = reader.GetInt32(7)
+            };
+        }
+
+        return null;
     }
 }

@@ -85,7 +85,8 @@ public class AccountPresentation
                     LastName = lastName,
                     Email = email,
                     Password = password,
-                    TelNum = telNum
+                    TelNum = telNum,
+                    RankName = "-"
                 };
 
                 success = _accountLogic.CreateAccount(newAccount);
@@ -131,6 +132,10 @@ public class AccountPresentation
         if (account != null)
         {
             Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
+            if (account.RankName != "-")
+            {
+                Console.WriteLine($"Your current loyalty rank is: {account.RankName}");
+            }
             Session.SetUser(account);
         }
         else

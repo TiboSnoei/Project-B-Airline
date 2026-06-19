@@ -91,6 +91,7 @@ public class FlightLogicTests
         var flight = new FlightModel
         {
             TailNumber = "HR101",
+            FlightNumber = "RO-1234",
             Origin = "Amsterdam",
             Destination = "London",
             TakeOffTime = DateTime.Now.AddHours(2),
