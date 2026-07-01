@@ -139,7 +139,12 @@ public class FlightPresentation
         while (true)
         {
             Console.Write(message);
-            if (DateTime.TryParse(Console.ReadLine(), out value))
+            if (DateTime.TryParseExact(Console.ReadLine(),
+                    "yyyy-MM-dd HH:mm",
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Globalization.DateTimeStyles.None,
+                    out value)
+                )
                 return value;
 
             Console.WriteLine("Invalid date.");
