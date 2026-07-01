@@ -37,9 +37,31 @@ public class FlightLogic
             return false;
         }
 
+        if (!flight.Destination.All(c =>
+            char.IsLetter(c) ||
+            c == ' ' ||
+            c == '-' ||
+            c == '\'' ||
+            c == '.'))
+        {
+            Console.WriteLine("Destination cannot contain special characters or numbers.");
+            return false;
+        }
+
         if (string.IsNullOrWhiteSpace(flight.Origin))
         {
             Console.WriteLine("Origin cannot be empty.");
+            return false;
+        }
+
+        if (!flight.Origin.All(c =>
+            char.IsLetter(c) ||
+            c == ' ' ||
+            c == '-' ||
+            c == '\'' ||
+            c == '.'))
+        {
+            Console.WriteLine("Origin cannot contain special characters or numbers.");
             return false;
         }
 
