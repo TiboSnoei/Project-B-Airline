@@ -53,7 +53,7 @@ public class UserBookingsListLogic
             var _TailNumber = _Flight.TailNumber;
             var _TakeOffTime = _Flight.TakeOffTime;
             var _ArrivalTime = _Flight.ArrivalTime;
-            var _Price = _Flight.DefaultPrice; // TODO: Price needs to be chanced when upgrades/extras are booked or loyalty bonuses are givven.
+            var _Price = $"€{_Flight.DefaultPrice},-"; // TODO: Price needs to be chanced when upgrades/extras are booked or loyalty bonuses are givven.
             var _Origin = _Flight.Origin;
             var _Destination = _Flight.Destination;
 

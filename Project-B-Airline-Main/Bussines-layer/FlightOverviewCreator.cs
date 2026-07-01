@@ -66,57 +66,70 @@ public class FlightOverviewCreator
                 if (flight.Destination == "Rotterdam") {inboundflights.Add(flight);}
             }
 
-            string spacingformat = "{0,-15}|{1,-20}|{2,-20}|{3,-25}|{4,-25}|{5,-23}|{6,-10}";
-            string header = "Available Flights";
-            string optionsHeader = string.Format(spacingformat, "FlightNumber", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
-            
-            foreach(FlightModel flight in filteredflights)
+            if (outboundflights.Count() == 0 || inboundflights.Count() == 0)
             {
-                string option = string.Format(spacingformat,  flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
-                stringfilteredflights.Add(option);
+                Console.Clear();
+                Console.WriteLine("\n Sadly we do not have any flights planned that match your input.\n");
+                Console.WriteLine("Press ESC to return.");
             }
 
-            foreach(FlightModel flight in outboundflights)
+            else
             {
-                string option = string.Format(spacingformat, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
-                stringoutboundflights.Add(option);
-            }
+                string spacingformat = "{0,-15}|{1,-20}|{2,-20}|{3,-25}|{4,-25}|{5,-23}|{6,-10}";
+                string header = "Available Flights";
+                string optionsHeader = string.Format(spacingformat, "FlightNumber", "TailNumber", "Destination", "Departure", "TakeOffTime", "ArrivalTime", "Price");
+                
+                foreach(FlightModel flight in filteredflights)
+                {
+                    string DefaultPriceWithCurrency = $"€{flight.DefaultPrice},-";
+                    string option = string.Format(spacingformat,  flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, DefaultPriceWithCurrency);
+                    stringfilteredflights.Add(option);
+                }
 
-            foreach(FlightModel flight in inboundflights)
-            {
-                string option = string.Format(spacingformat, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, flight.DefaultPrice);
-                stringinboundflights.Add(option);
-            }
+                foreach(FlightModel flight in outboundflights)
+                {
+                    string DefaultPriceWithCurrency = $"€{flight.DefaultPrice},-";
+                    string option = string.Format(spacingformat, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, DefaultPriceWithCurrency);
+                    stringoutboundflights.Add(option);
+                }
 
-            if (!Returnflightselected)
-            {
-                FlightModel chosenflight;
-                string[] arrayfliteredflights = stringfilteredflights.ToArray();
-                Menu menu = new Menu();
-                int chosenflightindex = menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
-                if (chosenflightindex == arrayfliteredflights.Length) {return;}
-                else {chosenflight = filteredflights[chosenflightindex];}
-                BookFlight.Bookflight(chosenflight);
-            }
+                foreach(FlightModel flight in inboundflights)
+                {
+                    string DefaultPriceWithCurrency = $"€{flight.DefaultPrice},-";
+                    string option = string.Format(spacingformat, flight.FlightNumber, flight.TailNumber, flight.Destination, flight.Origin, flight.TakeOffTime, flight.ArrivalTime, DefaultPriceWithCurrency);
+                    stringinboundflights.Add(option);
+                }
 
-            else if (Returnflightselected)
-            {
-                FlightModel chosenoutboundflight;
-                string[] arrayoutboundflight = stringoutboundflights.ToArray();
-                Menu outboundmenu = new Menu();
-                int chosenoutboundflightindex = outboundmenu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
-                if (chosenoutboundflightindex == arrayoutboundflight.Length) {return;}
-                else {chosenoutboundflight = outboundflights[chosenoutboundflightindex];}
+                if (!Returnflightselected)
+                {
+                    FlightModel chosenflight;
+                    string[] arrayfliteredflights = stringfilteredflights.ToArray();
+                    Menu menu = new Menu();
+                    int chosenflightindex = menu.VerticalMenuWithColumns(arrayfliteredflights, header, optionsHeader);
+                    if (chosenflightindex == arrayfliteredflights.Length) {return;}
+                    else {chosenflight = filteredflights[chosenflightindex];}
+                    BookFlight.Bookflight(chosenflight);
+                }
 
-                FlightModel choseninboundflight;
-                string[] arrayinboundflight = stringinboundflights.ToArray();
-                Menu inboundmenu = new Menu();
-                int choseninboundflightindex = inboundmenu.VerticalMenuWithColumns(arrayinboundflight, header, optionsHeader);
-                if (choseninboundflightindex == arrayinboundflight.Length) {return;}
-                else {choseninboundflight = inboundflights[choseninboundflightindex];}
+                else if (Returnflightselected)
+                {
+                    FlightModel chosenoutboundflight;
+                    string[] arrayoutboundflight = stringoutboundflights.ToArray();
+                    Menu outboundmenu = new Menu();
+                    int chosenoutboundflightindex = outboundmenu.VerticalMenuWithColumns(arrayoutboundflight, header, optionsHeader);
+                    if (chosenoutboundflightindex == arrayoutboundflight.Length) {return;}
+                    else {chosenoutboundflight = outboundflights[chosenoutboundflightindex];}
 
-                BookFlight.Bookflight(chosenoutboundflight);
-                BookFlight.Bookflight(choseninboundflight);
+                    FlightModel choseninboundflight;
+                    string[] arrayinboundflight = stringinboundflights.ToArray();
+                    Menu inboundmenu = new Menu();
+                    int choseninboundflightindex = inboundmenu.VerticalMenuWithColumns(arrayinboundflight, header, optionsHeader);
+                    if (choseninboundflightindex == arrayinboundflight.Length) {return;}
+                    else {choseninboundflight = inboundflights[choseninboundflightindex];}
+
+                    BookFlight.Bookflight(chosenoutboundflight);
+                    BookFlight.Bookflight(choseninboundflight);
+                }
             }
         }
         catch (Exception ex)
