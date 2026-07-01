@@ -65,6 +65,12 @@ public class FlightLogic
             return false;
         }
 
+        if (flight.Origin == flight.Destination)
+        {
+            Console.WriteLine("Origin and Destination cannot be the same.");
+            return false;
+        }
+
         // Check if tail number corresponds to an existing plane
         if (string.IsNullOrWhiteSpace(flight.TailNumber))
         {
