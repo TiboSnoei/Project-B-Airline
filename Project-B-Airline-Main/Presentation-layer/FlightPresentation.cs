@@ -112,7 +112,7 @@ public class FlightPresentation
         while (true)
         {
             Console.Write(message);
-            if (int.TryParse(Console.ReadLine(), out value))
+            if (int.TryParse(Console.ReadLine(), out value) && value > 0)
                 return value;
 
             Console.WriteLine("Invalid number.");
