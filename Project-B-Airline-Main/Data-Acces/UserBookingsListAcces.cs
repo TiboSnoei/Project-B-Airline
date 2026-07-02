@@ -28,7 +28,7 @@ public class UserBookingsListAcces
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
 
-            string sql = "SELECT * FROM CustomerFlight WHERE UserID = @UserID ";
+            string sql = "SELECT UserID, FlightID, Seat, SeatChosen, ExtraLegroom, OnflightMeal, ExtraLuggage FROM CustomerFlight WHERE UserID = @UserID ";
 
             using var command = new SqliteCommand(sql, connection);
             command.Parameters.AddWithValue("@UserID", LoggedInUser.UserID);
