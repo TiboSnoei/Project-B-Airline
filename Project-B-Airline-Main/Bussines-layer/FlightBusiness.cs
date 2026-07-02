@@ -31,10 +31,20 @@ public class FlightLogic
             return false;
         }
 
-
         if (string.IsNullOrWhiteSpace(flight.Destination))
         {
             Console.WriteLine("Destination cannot be empty.");
+            return false;
+        }
+
+        if (!flight.Destination.All(c =>
+            char.IsLetter(c) ||
+            c == ' ' ||
+            c == '-' ||
+            c == '\'' ||
+            c == '.'))
+        {
+            Console.WriteLine("Destination cannot contain special characters or numbers.");
             return false;
         }
 
@@ -44,10 +54,33 @@ public class FlightLogic
             return false;
         }
 
+        if (!flight.Origin.All(c =>
+            char.IsLetter(c) ||
+            c == ' ' ||
+            c == '-' ||
+            c == '\'' ||
+            c == '.'))
+        {
+            Console.WriteLine("Origin cannot contain special characters or numbers.");
+            return false;
+        }
+
+        if (flight.Origin == flight.Destination)
+        {
+            Console.WriteLine("Origin and Destination cannot be the same.");
+            return false;
+        }
+
+        // Check if tail number corresponds to an existing plane
         if (string.IsNullOrWhiteSpace(flight.TailNumber))
         {
-            // TODO: Check if tailnumber is an existing one.
-            Console.WriteLine("Invalid tail number.");
+            Console.WriteLine("Tail number cannot be empty.");
+            return false;
+        }
+
+        if (new PlaneAccess().GetPlaneByTailNumber(flight.TailNumber) == null)
+        {
+            Console.WriteLine($"There is no plane with the tail number {flight.TailNumber}.");
             return false;
         }
 
