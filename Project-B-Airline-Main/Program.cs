@@ -40,7 +40,6 @@ class Program
                 case "Search Flights":
                     FlightOverviewSearchPresentation flightOverviewSearchPresentation = new FlightOverviewSearchPresentation();
                     flightOverviewSearchPresentation.FlightSearchMenu();
-                    Console.ReadKey();
                     break;
 
                 case "Login":
