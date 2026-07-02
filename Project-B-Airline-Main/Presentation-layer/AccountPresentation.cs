@@ -43,55 +43,23 @@ public class AccountPresentation
         Console.Clear();
         Console.WriteLine("=== Register ===");
 
-        Console.Write("First name: ");
+        Console.Write("First name (2 or more letters): ");
         string? firstName = Console.ReadLine();
 
-        // validate first name
-        if (string.IsNullOrEmpty(firstName) || firstName.Length < 2 || !firstName.All(char.IsLetter))
-        {
-            Console.WriteLine("Invalid first name. It must be at least 2 characters long and contain only letters. Press [Enter] to try again.");
-            Console.ReadKey();
-            return;
-        }
-
-        Console.Write("Last name: ");
+        Console.Write("Last name (2 or more letters): ");
         string? lastName = Console.ReadLine();
 
-        // validate last name
-        if (string.IsNullOrEmpty(lastName) || lastName.Length < 2 || !lastName.All(char.IsLetter))
-        {
-            Console.WriteLine("Invalid last name. It must be at least 2 characters long and contain only letters. Press [Enter] to try again.");
-            Console.ReadKey();
-            return;
-        }
-
-        Console.Write("Email: ");
+        Console.Write("Email (valid email address): ");
         string? email = Console.ReadLine();
 
-        // validate email
-        if (string.IsNullOrEmpty(email) || !new EmailAddressAttribute().IsValid(email))
-        {
-            Console.WriteLine("Invalid email address. Press [Enter] to try again.");
-            Console.ReadKey();
-            return;
-        }
-
-        Console.Write("Phone number: ");
+        Console.Write("Phone number (10 or more digits): ");
         string? telNum = Console.ReadLine();
-
-        // validate phone number
-        if (string.IsNullOrEmpty(telNum) || telNum.Length < 10 || !telNum.All(char.IsDigit))
-        {
-            Console.WriteLine("Invalid phone number. It must be at least 10 digits long and contain only numbers. Press [Enter] to try again.");
-            Console.ReadKey();
-            return;
-        }
 
         string password = "";
         bool success = false;
         while (run)
         {
-            Console.Write("Password: ");
+            Console.Write("Password (6 or more characters): ");
             password = ReadPassword();
 
             Console.Write("Confirm Password: ");
@@ -127,11 +95,14 @@ public class AccountPresentation
                 if (success)
                 {
                     Console.WriteLine("\nRegistration successful!");
+                    Console.ReadKey();
                 }
 
                 else
                 {
-                    Console.WriteLine("\nRegistration failed (invalid data or user already exists).");
+                    Console.WriteLine("\nRegistration failed (invalid data or email is already taken). Please try again and double-check your input.");
+                    Console.WriteLine($"Press [Enter] to continue.");
+                    Console.ReadKey();
                 }
 
                 run = false;
@@ -143,7 +114,7 @@ public class AccountPresentation
             AccountModel account = _accountLogic.CheckLogin(email, password);
             Session.SetUser(account);
             Console.WriteLine($"\nWelcome {account.FirstName} {account.LastName}!");
-            Console.WriteLine($"Press 'Enter' to continue.");
+            Console.WriteLine($"Press [Enter] to continue.");
             Console.ReadKey();
         }
     }
@@ -175,7 +146,6 @@ public class AccountPresentation
             // TODO: add reason why invalid and requery 
             Console.WriteLine("\nInvalid email or password.");
         }
-        
         Console.ReadKey();
     }
 }
