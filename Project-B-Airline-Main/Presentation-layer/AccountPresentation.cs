@@ -44,16 +44,48 @@ public class AccountPresentation
         Console.WriteLine("=== Register ===");
 
         Console.Write("First name: ");
-        string firstName = Console.ReadLine();
+        string? firstName = Console.ReadLine();
+
+        // validate first name
+        if (string.IsNullOrEmpty(firstName) || firstName.Length < 2 || !firstName.All(char.IsLetter))
+        {
+            Console.WriteLine("Invalid first name. It must be at least 2 characters long and contain only letters. Press [Enter] to try again.");
+            Console.ReadKey();
+            return;
+        }
 
         Console.Write("Last name: ");
-        string lastName = Console.ReadLine();
+        string? lastName = Console.ReadLine();
+
+        // validate last name
+        if (string.IsNullOrEmpty(lastName) || lastName.Length < 2 || !lastName.All(char.IsLetter))
+        {
+            Console.WriteLine("Invalid last name. It must be at least 2 characters long and contain only letters. Press [Enter] to try again.");
+            Console.ReadKey();
+            return;
+        }
 
         Console.Write("Email: ");
-        string email = Console.ReadLine();
+        string? email = Console.ReadLine();
+
+        // validate email
+        if (string.IsNullOrEmpty(email) || !new EmailAddressAttribute().IsValid(email))
+        {
+            Console.WriteLine("Invalid email address. Press [Enter] to try again.");
+            Console.ReadKey();
+            return;
+        }
 
         Console.Write("Phone number: ");
-        string telNum = Console.ReadLine();
+        string? telNum = Console.ReadLine();
+
+        // validate phone number
+        if (string.IsNullOrEmpty(telNum) || telNum.Length < 10 || !telNum.All(char.IsDigit))
+        {
+            Console.WriteLine("Invalid phone number. It must be at least 10 digits long and contain only numbers. Press [Enter] to try again.");
+            Console.ReadKey();
+            return;
+        }
 
         string password = "";
         bool success = false;
